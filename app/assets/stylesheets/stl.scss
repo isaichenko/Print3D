@@ -1,3 +1,86 @@
 // Place all the styles related to the stl controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+      html
+      {
+        margin: 0;
+      }
+
+      body
+      {
+        margin: 0;
+      }
+
+      .cinfo
+      {
+        width:250px;
+        background:#DDDDDD;
+        border: 1px solid;
+        border-radius: 25px;
+        padding:2px 10px 2px 10px;
+        margin-bottom:20px;
+      }
+
+      .cinfo table {width:100%;}
+      .cinfo tr {text-align:left;vertical-align:top;}
+
+      #statswrap
+      {
+        display:inline-block;
+        vertical-align:top;
+        -webkit-transition: width 1.5s;
+        transition: width 1.5s;
+        overflow:hidden;
+      }
+
+      .cbar
+      {
+        width:20px;
+        height:20px;
+        display:inline-block;
+        cursor:pointer;
+        border:2px solid transparent;
+      }
+
+      .cact {margin-bottom:5px;}
+      .cact span {border-bottom: 1px dotted #3434AB;color:#3434AB;cursor:pointer;}
+
+      .vslink
+      {
+        position:absolute;
+        bottom:0px;right:1px;
+        font:10px Arial;color:#555555;
+        text-decoration:none;
+      }
+
+      header
+      {
+        text-align:center;
+        border: 1px solid #909090;
+        border-radius: 12px;
+        padding:5px;
+        margin:5px;
+        background:#FFFFFF;
+      }
+
+      footer
+      {
+        float:right;
+        font:14px Arial;color:#1010FF;
+        margin:30px;
+      }
+
+      footer a {text-decoration:none;font:14px Arial;color:#1010FF;}
+      footer a:hover {text-decoration:none;font:14px Arial;color:#1010FF;}
+
+      h2 {margin-bottom:5px;margin-top:0px;}
+
+      h4 {margin-left:20px;margin-bottom:1px;margin-top:2px;color:#202050;}
+      h5 {margin-left:20px;margin-bottom:2px;margin-top:0px;font-weight: normal;}
+
+      .stitle
+      {
+        font:20px Arial;color:#2020DD;margin:10px 30px 10px 30px;
+      }
+

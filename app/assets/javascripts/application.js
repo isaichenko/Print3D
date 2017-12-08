@@ -10,10 +10,12 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+
 //= require three.min.js
 //= require webgl_detector.js
 //= require OrbitControls.js
 //= require parser.js
+//= require stl_index.js
 //= require rails-ujs
 //= require turbolinks
 //= require_tree .
