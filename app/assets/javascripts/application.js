@@ -11,12 +11,7 @@
 // about supported directives.
 //
 
-//= require three.min.js
-//= require webgl_detector.js
-//= require OrbitControls.js
-//= require parser.js
-//= require read_internal.js
-//= require read_external.js
+//= require full.js
 //= require stl_index.js
 //= require rails-ujs
 //= require turbolinks

@@ -707,3 +707,1525 @@ r.material instanceof THREE.MeshFaceMaterial?r.material.materials[0]:r.material)
 r.matrixWorld),b.renderImmediateObject(k,i.__lights,null,c,r));l=b.getClearColor();n=b.getClearAlpha();a.clearColor(l.r,l.g,l.b,n);a.enable(a.BLEND)}};THREE.ShaderFlares={lensFlareVertexTexture:{vertexShader:"uniform lowp int renderType;\nuniform vec3 screenPosition;\nuniform vec2 scale;\nuniform float rotation;\nuniform sampler2D occlusionMap;\nattribute vec2 position;\nattribute vec2 uv;\nvarying vec2 vUV;\nvarying float vVisibility;\nvoid main() {\nvUV = uv;\nvec2 pos = position;\nif( renderType == 2 ) {\nvec4 visibility = texture2D( occlusionMap, vec2( 0.1, 0.1 ) );\nvisibility += texture2D( occlusionMap, vec2( 0.5, 0.1 ) );\nvisibility += texture2D( occlusionMap, vec2( 0.9, 0.1 ) );\nvisibility += texture2D( occlusionMap, vec2( 0.9, 0.5 ) );\nvisibility += texture2D( occlusionMap, vec2( 0.9, 0.9 ) );\nvisibility += texture2D( occlusionMap, vec2( 0.5, 0.9 ) );\nvisibility += texture2D( occlusionMap, vec2( 0.1, 0.9 ) );\nvisibility += texture2D( occlusionMap, vec2( 0.1, 0.5 ) );\nvisibility += texture2D( occlusionMap, vec2( 0.5, 0.5 ) );\nvVisibility =        visibility.r / 9.0;\nvVisibility *= 1.0 - visibility.g / 9.0;\nvVisibility *=       visibility.b / 9.0;\nvVisibility *= 1.0 - visibility.a / 9.0;\npos.x = cos( rotation ) * position.x - sin( rotation ) * position.y;\npos.y = sin( rotation ) * position.x + cos( rotation ) * position.y;\n}\ngl_Position = vec4( ( pos * scale + screenPosition.xy ).xy, screenPosition.z, 1.0 );\n}",
 fragmentShader:"uniform lowp int renderType;\nuniform sampler2D map;\nuniform float opacity;\nuniform vec3 color;\nvarying vec2 vUV;\nvarying float vVisibility;\nvoid main() {\nif( renderType == 0 ) {\ngl_FragColor = vec4( 1.0, 0.0, 1.0, 0.0 );\n} else if( renderType == 1 ) {\ngl_FragColor = texture2D( map, vUV );\n} else {\nvec4 texture = texture2D( map, vUV );\ntexture.a *= opacity * vVisibility;\ngl_FragColor = texture;\ngl_FragColor.rgb *= color;\n}\n}"},lensFlare:{vertexShader:"uniform lowp int renderType;\nuniform vec3 screenPosition;\nuniform vec2 scale;\nuniform float rotation;\nattribute vec2 position;\nattribute vec2 uv;\nvarying vec2 vUV;\nvoid main() {\nvUV = uv;\nvec2 pos = position;\nif( renderType == 2 ) {\npos.x = cos( rotation ) * position.x - sin( rotation ) * position.y;\npos.y = sin( rotation ) * position.x + cos( rotation ) * position.y;\n}\ngl_Position = vec4( ( pos * scale + screenPosition.xy ).xy, screenPosition.z, 1.0 );\n}",
 fragmentShader:"precision mediump float;\nuniform lowp int renderType;\nuniform sampler2D map;\nuniform sampler2D occlusionMap;\nuniform float opacity;\nuniform vec3 color;\nvarying vec2 vUV;\nvoid main() {\nif( renderType == 0 ) {\ngl_FragColor = vec4( texture2D( map, vUV ).rgb, 0.0 );\n} else if( renderType == 1 ) {\ngl_FragColor = texture2D( map, vUV );\n} else {\nfloat visibility = texture2D( occlusionMap, vec2( 0.5, 0.1 ) ).a;\nvisibility += texture2D( occlusionMap, vec2( 0.9, 0.5 ) ).a;\nvisibility += texture2D( occlusionMap, vec2( 0.5, 0.9 ) ).a;\nvisibility += texture2D( occlusionMap, vec2( 0.1, 0.5 ) ).a;\nvisibility = ( 1.0 - visibility / 4.0 );\nvec4 texture = texture2D( map, vUV );\ntexture.a *= opacity * visibility;\ngl_FragColor = texture;\ngl_FragColor.rgb *= color;\n}\n}"}};
+
+var webgl_Detector = {
+
+        canvas: !! window.CanvasRenderingContext2D,
+        webgl: ( function () { try { var canvas = document.createElement( 'canvas' ); return !! window.WebGLRenderingContext && ( canvas.getContext( 'webgl' ) || canvas.getContext( 'experimental-webgl' ) ); } catch( e ) { return false; } } )(),
+        workers: !! window.Worker,
+        fileapi: window.File && window.FileReader && window.FileList && window.Blob,
+
+        getWebGLErrorMessage: function () {
+
+                var element = document.createElement( 'div' );
+                element.id = 'webgl-error-message';
+                element.style.fontFamily = 'monospace';
+                element.style.fontSize = '13px';
+                element.style.fontWeight = 'normal';
+                element.style.textAlign = 'center';
+                element.style.background = '#fff';
+                element.style.color = '#000';
+                element.style.padding = '1.5em';
+                element.style.width = '400px';
+                element.style.margin = '5em auto 0';
+
+                if ( ! this.webgl ) {
+
+                        element.innerHTML = window.WebGLRenderingContext ? [
+                                'Your graphics card does not seem to support <a href="http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation" style="color:#000">WebGL</a>.<br />',
+                                'Find out how to get it <a href="http://get.webgl.org/" style="color:#000">here</a>.'
+                        ].join( '\n' ) : [
+                                'Your browser does not seem to support <a href="http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation" style="color:#000">WebGL</a>.<br/>',
+                                'Find out how to get it <a href="http://get.webgl.org/" style="color:#000">here</a>.'
+                        ].join( '\n' );
+
+                }
+
+                return element;
+
+        },
+
+        addGetWebGLMessage: function ( parameters ) {
+
+                var parent, id, element;
+
+                parameters = parameters || {};
+
+                parent = parameters.parent !== undefined ? parameters.parent : document.body;
+                id = parameters.id !== undefined ? parameters.id : 'oldie';
+
+                element = Detector.getWebGLErrorMessage();
+                element.id = id;
+
+                parent.appendChild( element );
+
+        }
+
+};
+
+/**
+ * @author qiao / https://github.com/qiao
+ * @author mrdoob / http://mrdoob.com
+ * @author alteredq / http://alteredqualia.com/
+ * @author WestLangley / http://github.com/WestLangley
+ * @author erich666 / http://erichaines.com
+ */
+/*global THREE, console */
+
+// This set of controls performs orbiting, dollying (zooming), and panning. It maintains
+// the "up" direction as +Y, unlike the TrackballControls. Touch on tablet and phones is
+// supported.
+//
+//    Orbit - left mouse / touch: one finger move
+//    Zoom - middle mouse, or mousewheel / touch: two finger spread or squish
+//    Pan - right mouse, or arrow keys / touch: three finter swipe
+//
+// This is a drop-in replacement for (most) TrackballControls used in examples.
+// That is, include this js file and wherever you see:
+//      controls = new THREE.TrackballControls( camera );
+//      controls.target.z = 150;
+// Simple substitute "OrbitControls" and the control should work as-is.
+
+THREE.OrbitControls = function ( object, domElement ) {
+
+  this.object = object;
+  this.domElement = ( domElement !== undefined ) ? domElement : document;
+
+  // API
+
+  // Set to false to disable this control
+  this.enabled = true;
+
+  // "target" sets the location of focus, where the control orbits around
+  // and where it pans with respect to.
+  this.target = new THREE.Vector3();
+
+  // center is old, deprecated; use "target" instead
+  this.center = this.target;
+
+  // This option actually enables dollying in and out; left as "zoom" for
+  // backwards compatibility
+  this.noZoom = false;
+  this.zoomSpeed = 1.0;
+
+  // Limits to how far you can dolly in and out
+  this.minDistance = 0;
+  this.maxDistance = Infinity;
+
+  // Set to true to disable this control
+  this.noRotate = false;
+  this.rotateSpeed = 1.0;
+
+  // Set to true to disable this control
+  this.noPan = false;
+  this.keyPanSpeed = 7.0; // pixels moved per arrow key push
+
+  // Set to true to automatically rotate around the target
+  this.autoRotate = false;
+  this.autoRotateSpeed = 2.0; // 30 seconds per round when fps is 60
+
+  // How far you can orbit vertically, upper and lower limits.
+  // Range is 0 to Math.PI radians.
+  this.minPolarAngle = 0; // radians
+  this.maxPolarAngle = Math.PI; // radians
+
+  // Set to true to disable use of the keys
+  this.noKeys = false;
+
+  // The four arrow keys
+  this.keys = { LEFT: 37, UP: 38, RIGHT: 39, BOTTOM: 40 };
+
+  ////////////
+  // internals
+
+  var scope = this;
+
+  var EPS = 0.000001;
+
+  var rotateStart = new THREE.Vector2();
+  var rotateEnd = new THREE.Vector2();
+  var rotateDelta = new THREE.Vector2();
+
+  var panStart = new THREE.Vector2();
+  var panEnd = new THREE.Vector2();
+  var panDelta = new THREE.Vector2();
+  var panOffset = new THREE.Vector3();
+
+  var offset = new THREE.Vector3();
+
+  var dollyStart = new THREE.Vector2();
+  var dollyEnd = new THREE.Vector2();
+  var dollyDelta = new THREE.Vector2();
+
+  var phiDelta = 0;
+  var thetaDelta = 0;
+  var scale = 1;
+  var pan = new THREE.Vector3();
+
+  var lastPosition = new THREE.Vector3();
+
+  var STATE = { NONE : -1, ROTATE : 0, DOLLY : 1, PAN : 2, TOUCH_ROTATE : 3, TOUCH_DOLLY : 4, TOUCH_PAN : 5 };
+
+  var state = STATE.NONE;
+
+  // for reset
+
+  this.target0 = this.target.clone();
+  this.position0 = this.object.position.clone();
+
+  // events
+
+  var changeEvent = { type: 'change' };
+  var startEvent = { type: 'start'};
+  var endEvent = { type: 'end'};
+
+  this.rotateLeft = function ( angle ) {
+
+    if ( angle === undefined ) {
+
+      angle = getAutoRotationAngle();
+
+    }
+
+    thetaDelta -= angle;
+
+  };
+
+  this.rotateUp = function ( angle ) {
+
+    if ( angle === undefined ) {
+
+      angle = getAutoRotationAngle();
+
+    }
+
+    phiDelta -= angle;
+
+  };
+
+  // pass in distance in world space to move left
+  this.panLeft = function ( distance ) {
+
+    var te = this.object.matrix.elements;
+
+    // get X column of matrix
+    panOffset.set( te[ 0 ], te[ 1 ], te[ 2 ] );
+    panOffset.multiplyScalar( - distance );
+
+    pan.add( panOffset );
+
+  };
+
+  // pass in distance in world space to move up
+  this.panUp = function ( distance ) {
+
+    var te = this.object.matrix.elements;
+
+    // get Y column of matrix
+    panOffset.set( te[ 4 ], te[ 5 ], te[ 6 ] );
+    panOffset.multiplyScalar( distance );
+
+    pan.add( panOffset );
+
+  };
+
+  // pass in x,y of change desired in pixel space,
+  // right and down are positive
+  this.pan = function ( deltaX, deltaY ) {
+
+    var element = scope.domElement === document ? scope.domElement.body : scope.domElement;
+
+    if ( scope.object.fov !== undefined ) {
+
+      // perspective
+      var position = scope.object.position;
+      var offset = position.clone().sub( scope.target );
+      var targetDistance = offset.length();
+
+      // half of the fov is center to top of screen
+      targetDistance *= Math.tan( ( scope.object.fov / 2 ) * Math.PI / 180.0 );
+
+      // we actually don't use screenWidth, since perspective camera is fixed to screen height
+      scope.panLeft( 2 * deltaX * targetDistance / element.clientHeight );
+      scope.panUp( 2 * deltaY * targetDistance / element.clientHeight );
+
+    } else if ( scope.object.top !== undefined ) {
+
+      // orthographic
+      scope.panLeft( deltaX * (scope.object.right - scope.object.left) / element.clientWidth );
+      scope.panUp( deltaY * (scope.object.top - scope.object.bottom) / element.clientHeight );
+
+    } else {
+
+      // camera neither orthographic or perspective
+      console.warn( 'WARNING: OrbitControls.js encountered an unknown camera type - pan disabled.' );
+
+    }
+
+  };
+
+  this.dollyIn = function ( dollyScale ) {
+
+    if ( dollyScale === undefined ) {
+
+      dollyScale = getZoomScale();
+
+    }
+
+    scale /= dollyScale;
+
+  };
+
+  this.dollyOut = function ( dollyScale ) {
+
+    if ( dollyScale === undefined ) {
+
+      dollyScale = getZoomScale();
+
+    }
+
+    scale *= dollyScale;
+
+  };
+
+  this.update = function () {
+
+    var position = this.object.position;
+
+    offset.copy( position ).sub( this.target );
+
+    // angle from z-axis around y-axis
+
+    var theta = Math.atan2( offset.x, offset.z );
+
+    // angle from y-axis
+
+    var phi = Math.atan2( Math.sqrt( offset.x * offset.x + offset.z * offset.z ), offset.y );
+
+    if ( this.autoRotate ) {
+
+      this.rotateLeft( getAutoRotationAngle() );
+
+    }
+
+    theta += thetaDelta;
+    phi += phiDelta;
+
+    // restrict phi to be between desired limits
+    phi = Math.max( this.minPolarAngle, Math.min( this.maxPolarAngle, phi ) );
+
+    // restrict phi to be betwee EPS and PI-EPS
+    phi = Math.max( EPS, Math.min( Math.PI - EPS, phi ) );
+
+    var radius = offset.length() * scale;
+
+    // restrict radius to be between desired limits
+    radius = Math.max( this.minDistance, Math.min( this.maxDistance, radius ) );
+
+    // move target to panned location
+    this.target.add( pan );
+
+    offset.x = radius * Math.sin( phi ) * Math.sin( theta );
+    offset.y = radius * Math.cos( phi );
+    offset.z = radius * Math.sin( phi ) * Math.cos( theta );
+
+    position.copy( this.target ).add( offset );
+
+    this.object.lookAt( this.target );
+
+    thetaDelta = 0;
+    phiDelta = 0;
+    scale = 1;
+    pan.set( 0, 0, 0 );
+
+    if ( lastPosition.distanceTo( this.object.position ) > 0 ) {
+
+      this.dispatchEvent( changeEvent );
+
+      lastPosition.copy( this.object.position );
+
+    }
+
+  };
+
+
+  this.reset = function () {
+
+    state = STATE.NONE;
+
+    this.target.copy( this.target0 );
+    //this.object.position.copy( this.position0 );
+
+    this.update();
+
+  };
+
+  function getAutoRotationAngle() {
+
+    return 2 * Math.PI / 60 / 60 * scope.autoRotateSpeed;
+
+  }
+
+  function getZoomScale() {
+
+    return Math.pow( 0.95, scope.zoomSpeed );
+
+  }
+
+  function onMouseDown( event ) {
+
+    if ( scope.enabled === false ) return;
+    event.preventDefault();
+
+    if ( event.button === 0 ) {
+      if ( scope.noRotate === true ) return;
+
+      state = STATE.ROTATE;
+
+      rotateStart.set( event.clientX, event.clientY );
+
+    } else if ( event.button === 1 ) {
+      if ( scope.noZoom === true ) return;
+
+      state = STATE.DOLLY;
+
+      dollyStart.set( event.clientX, event.clientY );
+
+    } else if ( event.button === 2 ) {
+      if ( scope.noPan === true ) return;
+
+      state = STATE.PAN;
+
+      panStart.set( event.clientX, event.clientY );
+
+    }
+
+    scope.domElement.addEventListener( 'mousemove', onMouseMove, false );
+    scope.domElement.addEventListener( 'mouseup', onMouseUp, false );
+    scope.dispatchEvent( startEvent );
+
+  }
+
+  function onMouseMove( event ) {
+
+    if ( scope.enabled === false ) return;
+
+    event.preventDefault();
+
+    var element = scope.domElement === document ? scope.domElement.body : scope.domElement;
+
+    if ( state === STATE.ROTATE ) {
+
+      if ( scope.noRotate === true ) return;
+
+      rotateEnd.set( event.clientX, event.clientY );
+      rotateDelta.subVectors( rotateEnd, rotateStart );
+
+      // rotating across whole screen goes 360 degrees around
+      scope.rotateLeft( 2 * Math.PI * rotateDelta.x / element.clientWidth * scope.rotateSpeed );
+
+      // rotating up and down along whole screen attempts to go 360, but limited to 180
+      scope.rotateUp( 2 * Math.PI * rotateDelta.y / element.clientHeight * scope.rotateSpeed );
+
+      rotateStart.copy( rotateEnd );
+
+    } else if ( state === STATE.DOLLY ) {
+
+      if ( scope.noZoom === true ) return;
+
+      dollyEnd.set( event.clientX, event.clientY );
+      dollyDelta.subVectors( dollyEnd, dollyStart );
+
+      if ( dollyDelta.y > 0 ) {
+
+        scope.dollyIn();
+
+      } else {
+
+        scope.dollyOut();
+
+      }
+
+      dollyStart.copy( dollyEnd );
+
+    } else if ( state === STATE.PAN ) {
+
+      if ( scope.noPan === true ) return;
+
+      panEnd.set( event.clientX, event.clientY );
+      panDelta.subVectors( panEnd, panStart );
+
+      scope.pan( panDelta.x, panDelta.y );
+
+      panStart.copy( panEnd );
+
+    }
+
+    scope.update();
+
+  }
+
+  function onMouseUp( /* event */ ) {
+
+    if ( scope.enabled === false ) return;
+
+    scope.domElement.removeEventListener( 'mousemove', onMouseMove, false );
+    scope.domElement.removeEventListener( 'mouseup', onMouseUp, false );
+    scope.dispatchEvent( endEvent );
+    state = STATE.NONE;
+
+  }
+
+  function onMouseWheel( event ) {
+
+    if ( scope.enabled === false || scope.noZoom === true ) return;
+
+    event.preventDefault();
+
+    var delta = 0;
+
+    if ( event.wheelDelta !== undefined ) { // WebKit / Opera / Explorer 9
+
+      delta = event.wheelDelta;
+
+    } else if ( event.detail !== undefined ) { // Firefox
+
+      delta = - event.detail;
+
+    }
+
+    if ( delta > 0 ) {
+
+      scope.dollyOut();
+
+    } else {
+
+      scope.dollyIn();
+
+    }
+
+    scope.update();
+    scope.dispatchEvent( startEvent );
+    scope.dispatchEvent( endEvent );
+
+  }
+
+  function onKeyDown( event ) {
+
+    if ( scope.enabled === false || scope.noKeys === true || scope.noPan === true ) return;
+
+    switch ( event.keyCode ) {
+
+      case scope.keys.UP:
+        scope.pan( 0, scope.keyPanSpeed );
+        scope.update();
+        break;
+
+      case scope.keys.BOTTOM:
+        scope.pan( 0, - scope.keyPanSpeed );
+        scope.update();
+        break;
+
+      case scope.keys.LEFT:
+        scope.pan( scope.keyPanSpeed, 0 );
+        scope.update();
+        break;
+
+      case scope.keys.RIGHT:
+        scope.pan( - scope.keyPanSpeed, 0 );
+        scope.update();
+        break;
+
+    }
+
+  }
+
+  function touchstart( event ) {
+
+    if ( scope.enabled === false ) return;
+
+    switch ( event.touches.length ) {
+
+      case 1: // one-fingered touch: rotate
+
+        if ( scope.noRotate === true ) return;
+
+        state = STATE.TOUCH_ROTATE;
+
+        rotateStart.set( event.touches[ 0 ].pageX, event.touches[ 0 ].pageY );
+        break;
+
+      case 2: // two-fingered touch: dolly
+
+        if ( scope.noZoom === true ) return;
+
+        state = STATE.TOUCH_DOLLY;
+
+        var dx = event.touches[ 0 ].pageX - event.touches[ 1 ].pageX;
+        var dy = event.touches[ 0 ].pageY - event.touches[ 1 ].pageY;
+        var distance = Math.sqrt( dx * dx + dy * dy );
+        dollyStart.set( 0, distance );
+        break;
+
+      case 3: // three-fingered touch: pan
+
+        if ( scope.noPan === true ) return;
+
+        state = STATE.TOUCH_PAN;
+
+        panStart.set( event.touches[ 0 ].pageX, event.touches[ 0 ].pageY );
+        break;
+
+      default:
+
+        state = STATE.NONE;
+
+    }
+
+    scope.dispatchEvent( startEvent );
+
+  }
+
+  function touchmove( event ) {
+
+    if ( scope.enabled === false ) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    var element = scope.domElement === document ? scope.domElement.body : scope.domElement;
+
+    switch ( event.touches.length ) {
+
+      case 1: // one-fingered touch: rotate
+
+        if ( scope.noRotate === true ) return;
+        if ( state !== STATE.TOUCH_ROTATE ) return;
+
+        rotateEnd.set( event.touches[ 0 ].pageX, event.touches[ 0 ].pageY );
+        rotateDelta.subVectors( rotateEnd, rotateStart );
+
+        // rotating across whole screen goes 360 degrees around
+        scope.rotateLeft( 2 * Math.PI * rotateDelta.x / element.clientWidth * scope.rotateSpeed );
+        // rotating up and down along whole screen attempts to go 360, but limited to 180
+        scope.rotateUp( 2 * Math.PI * rotateDelta.y / element.clientHeight * scope.rotateSpeed );
+
+        rotateStart.copy( rotateEnd );
+
+        scope.update();
+        break;
+
+      case 2: // two-fingered touch: dolly
+
+        if ( scope.noZoom === true ) return;
+        if ( state !== STATE.TOUCH_DOLLY ) return;
+
+        var dx = event.touches[ 0 ].pageX - event.touches[ 1 ].pageX;
+        var dy = event.touches[ 0 ].pageY - event.touches[ 1 ].pageY;
+        var distance = Math.sqrt( dx * dx + dy * dy );
+
+        dollyEnd.set( 0, distance );
+        dollyDelta.subVectors( dollyEnd, dollyStart );
+
+        if ( dollyDelta.y > 0 ) {
+
+          scope.dollyOut();
+
+        } else {
+
+          scope.dollyIn();
+
+        }
+
+        dollyStart.copy( dollyEnd );
+
+        scope.update();
+        break;
+
+      case 3: // three-fingered touch: pan
+
+        if ( scope.noPan === true ) return;
+        if ( state !== STATE.TOUCH_PAN ) return;
+
+        panEnd.set( event.touches[ 0 ].pageX, event.touches[ 0 ].pageY );
+        panDelta.subVectors( panEnd, panStart );
+
+        scope.pan( panDelta.x, panDelta.y );
+
+        panStart.copy( panEnd );
+
+        scope.update();
+        break;
+
+      default:
+
+        state = STATE.NONE;
+
+    }
+
+  }
+
+  function touchend( /* event */ ) {
+
+    if ( scope.enabled === false ) return;
+
+    scope.dispatchEvent( endEvent );
+    state = STATE.NONE;
+
+  }
+
+  this.domElement.addEventListener( 'contextmenu', function ( event ) { event.preventDefault(); }, false );
+  this.domElement.addEventListener( 'mousedown', onMouseDown, false );
+  this.domElement.addEventListener( 'mousewheel', onMouseWheel, false );
+  this.domElement.addEventListener( 'DOMMouseScroll', onMouseWheel, false ); // firefox
+
+  this.domElement.addEventListener( 'touchstart', touchstart, false );
+  this.domElement.addEventListener( 'touchend', touchend, false );
+  this.domElement.addEventListener( 'touchmove', touchmove, false );
+
+  window.addEventListener( 'keydown', onKeyDown, false );
+
+};
+
+THREE.OrbitControls.prototype = Object.create( THREE.EventDispatcher.prototype );
+
+function parse_3d_file(filename, s)
+{
+  //determine type of file
+  //console.log(filename.split('.').pop().toLowerCase());
+  switch (filename.split('.').pop().toLowerCase())
+  {
+    case "stl":
+      return parse_stl_bin(s);
+      break;
+    case "obj":
+      return parse_obj(s);
+      break;
+    case "vf":
+      return parse_vf(arrayBufferToString(s));
+      break;
+    default:
+      return "Unknown file type";
+  }
+}
+
+function arrayBufferToString(buffer,onSuccess,onFail)
+{
+    var bufView = new Uint8Array(buffer);
+    var length = bufView.length;
+    var result = '';
+    for(var i = 0;i<length;i+=65535)
+    {
+        var addition = 65535;
+        if(i + 65535 > length)
+        {
+            addition = length - i;
+        }
+        result += String.fromCharCode.apply(null, bufView.subarray(i,i+addition));
+    }
+    if(result)
+    {
+        if(onSuccess)
+        onSuccess(result);
+    }else
+    {
+        if(onFail)
+        onFail('buffer was invalid');
+    }
+
+    return result;
+
+}
+
+function parse_obj (s)
+{
+  var obj_string=arrayBufferToString(s);
+
+
+    function vector( x, y, z ) {
+
+      return new THREE.Vector3( parseFloat( x ), parseFloat( y ), parseFloat( z ) );
+
+    }
+
+    function uv( u, v ) {
+
+      return new THREE.Vector2( parseFloat( u ), parseFloat( v ) );
+
+    }
+
+    function face3( a, b, c, normals ) {
+
+      return new THREE.Face3( a, b, c, normals );
+
+    }
+
+    var object = new THREE.Object3D();
+    var geometry, material, mesh;
+
+    function parseVertexIndex( index ) {
+
+      index = parseInt( index );
+
+      return index >= 0 ? index - 1 : index + vertices.length;
+
+    }
+
+    function parseNormalIndex( index ) {
+
+      index = parseInt( index );
+
+      return index >= 0 ? index - 1 : index + normals.length;
+
+    }
+
+    function parseUVIndex( index ) {
+
+      index = parseInt( index );
+
+      return index >= 0 ? index - 1 : index + uvs.length;
+
+    }
+
+    function add_face( a, b, c, normals_inds ) {
+
+      //if ( normals_inds === undefined )
+      if (1==1)
+      {
+
+        geometry.faces.push( face3(
+          vertices[ parseVertexIndex( a ) ] - 1,
+          vertices[ parseVertexIndex( b ) ] - 1,
+          vertices[ parseVertexIndex( c ) ] - 1
+        ) );
+
+      } else {
+
+        geometry.faces.push( face3(
+          vertices[ parseVertexIndex( a ) ] - 1,
+          vertices[ parseVertexIndex( b ) ] - 1,
+          vertices[ parseVertexIndex( c ) ] - 1,
+          [
+            normals[ parseNormalIndex( normals_inds[ 0 ] ) ].clone(),
+            normals[ parseNormalIndex( normals_inds[ 1 ] ) ].clone(),
+            normals[ parseNormalIndex( normals_inds[ 2 ] ) ].clone()
+          ]
+        ) );
+
+      }
+
+    }
+
+    function add_uvs( a, b, c ) {
+
+      geometry.faceVertexUvs[ 0 ].push( [
+        uvs[ parseUVIndex( a ) ].clone(),
+        uvs[ parseUVIndex( b ) ].clone(),
+        uvs[ parseUVIndex( c ) ].clone()
+      ] );
+
+    }
+
+    function handle_face_line(faces, uvs, normals_inds) {
+
+      if ( faces[ 3 ] === undefined ) {
+
+        add_face( faces[ 0 ], faces[ 1 ], faces[ 2 ], normals_inds );
+
+        if ( uvs !== undefined && uvs.length > 0 ) {
+
+          add_uvs( uvs[ 0 ], uvs[ 1 ], uvs[ 2 ] );
+
+        }
+
+      } else {
+
+        if ( normals_inds !== undefined && normals_inds.length > 0 ) {
+
+          add_face( faces[ 0 ], faces[ 1 ], faces[ 3 ], [ normals_inds[ 0 ], normals_inds[ 1 ], normals_inds[ 3 ] ] );
+          add_face( faces[ 1 ], faces[ 2 ], faces[ 3 ], [ normals_inds[ 1 ], normals_inds[ 2 ], normals_inds[ 3 ] ] );
+
+        } else {
+
+          add_face( faces[ 0 ], faces[ 1 ], faces[ 3 ] );
+          add_face( faces[ 1 ], faces[ 2 ], faces[ 3 ] );
+
+        }
+
+        if ( uvs !== undefined && uvs.length > 0 ) {
+
+          add_uvs( uvs[ 0 ], uvs[ 1 ], uvs[ 3 ] );
+          add_uvs( uvs[ 1 ], uvs[ 2 ], uvs[ 3 ] );
+
+        }
+
+      }
+
+    }
+
+    // create mesh if no objects in text
+
+    if ( /^o /gm.test( obj_string ) === false ) {
+
+      geometry = new THREE.Geometry();
+      //material = new THREE.MeshLambertMaterial();
+      //mesh = new THREE.Mesh( geometry, material );
+      //object.add( mesh );
+
+    }
+
+    var vertices = [];
+    var normals = [];
+    var uvs = [];
+
+    // v float float float
+
+    var vertex_pattern = /v( +[\d|\.|\+|\-|e]+)( +[\d|\.|\+|\-|e]+)( +[\d|\.|\+|\-|e]+)/;
+
+    // vn float float float
+
+    var normal_pattern = /vn( +[\d|\.|\+|\-|e]+)( +[\d|\.|\+|\-|e]+)( +[\d|\.|\+|\-|e]+)/;
+
+    // vt float float
+
+    var uv_pattern = /vt( +[\d|\.|\+|\-|e]+)( +[\d|\.|\+|\-|e]+)/;
+
+    // f vertex vertex vertex ...
+
+    var face_pattern1 = /f( +-?\d+)( +-?\d+)( +-?\d+)( +-?\d+)?/;
+
+    // f vertex/uv vertex/uv vertex/uv ...
+
+    var face_pattern2 = /f( +(-?\d+)\/(-?\d+))( +(-?\d+)\/(-?\d+))( +(-?\d+)\/(-?\d+))( +(-?\d+)\/(-?\d+))?/;
+
+    // f vertex/uv/normal vertex/uv/normal vertex/uv/normal ...
+
+    var face_pattern3 = /f( +(-?\d+)\/(-?\d+)\/(-?\d+))( +(-?\d+)\/(-?\d+)\/(-?\d+))( +(-?\d+)\/(-?\d+)\/(-?\d+))( +(-?\d+)\/(-?\d+)\/(-?\d+))?/;
+
+    // f vertex//normal vertex//normal vertex//normal ...
+
+    var face_pattern4 = /f( +(-?\d+)\/\/(-?\d+))( +(-?\d+)\/\/(-?\d+))( +(-?\d+)\/\/(-?\d+))( +(-?\d+)\/\/(-?\d+))?/
+
+    //
+
+    var lines = obj_string.split( '\n' );
+
+    for ( var i = 0; i < lines.length; i ++ ) {
+
+      var line = lines[ i ];
+      line = line.trim();
+
+      var result;
+
+      if ( line.length === 0 || line.charAt( 0 ) === '#' ) {
+
+        continue;
+
+      } else if ( ( result = vertex_pattern.exec( line ) ) !== null ) {
+
+        // ["v 1.0 2.0 3.0", "1.0", "2.0", "3.0"]
+
+        vertices.push(
+          geometry.vertices.push(
+            vector(
+              result[ 1 ], result[ 2 ], result[ 3 ]
+            )
+          )
+        );
+
+      } else if ( ( result = normal_pattern.exec( line ) ) !== null ) {
+
+        // ["vn 1.0 2.0 3.0", "1.0", "2.0", "3.0"]
+
+        normals.push(
+          vector(
+            result[ 1 ], result[ 2 ], result[ 3 ]
+          )
+        );
+
+      } else if ( ( result = uv_pattern.exec( line ) ) !== null ) {
+
+        // ["vt 0.1 0.2", "0.1", "0.2"]
+
+        uvs.push(
+          uv(
+            result[ 1 ], result[ 2 ]
+          )
+        );
+
+      } else if ( ( result = face_pattern1.exec( line ) ) !== null ) {
+
+        // ["f 1 2 3", "1", "2", "3", undefined]
+
+        handle_face_line(
+          [ result[ 1 ], result[ 2 ], result[ 3 ], result[ 4 ] ]
+        );
+
+      } else if ( ( result = face_pattern2.exec( line ) ) !== null ) {
+
+        // ["f 1/1 2/2 3/3", " 1/1", "1", "1", " 2/2", "2", "2", " 3/3", "3", "3", undefined, undefined, undefined]
+
+        handle_face_line(
+          [ result[ 2 ], result[ 5 ], result[ 8 ], result[ 11 ] ], //faces
+          [ result[ 3 ], result[ 6 ], result[ 9 ], result[ 12 ] ] //uv
+        );
+
+      } else if ( ( result = face_pattern3.exec( line ) ) !== null ) {
+
+        // ["f 1/1/1 2/2/2 3/3/3", " 1/1/1", "1", "1", "1", " 2/2/2", "2", "2", "2", " 3/3/3", "3", "3", "3", undefined, undefined, undefined, undefined]
+
+        handle_face_line(
+          [ result[ 2 ], result[ 6 ], result[ 10 ], result[ 14 ] ], //faces
+          [ result[ 3 ], result[ 7 ], result[ 11 ], result[ 15 ] ], //uv
+          [ result[ 4 ], result[ 8 ], result[ 12 ], result[ 16 ] ] //normal
+        );
+
+      } else if ( ( result = face_pattern4.exec( line ) ) !== null ) {
+
+        // ["f 1//1 2//2 3//3", " 1//1", "1", "1", " 2//2", "2", "2", " 3//3", "3", "3", undefined, undefined, undefined]
+
+        handle_face_line(
+          [ result[ 2 ], result[ 5 ], result[ 8 ], result[ 11 ] ], //faces
+          [ ], //uv
+          [ result[ 3 ], result[ 6 ], result[ 9 ], result[ 12 ] ] //normal
+        );
+
+      } else if ( /^o /.test( line ) ) {
+
+        geometry = new THREE.Geometry();
+        //material = new THREE.MeshLambertMaterial();
+
+        //mesh = new THREE.Mesh( geometry, material );
+        //mesh.name = line.substring( 2 ).trim();
+        //object.add( mesh );
+
+      } else if ( /^g /.test( line ) ) {
+
+        // group
+
+      } else if ( /^usemtl /.test( line ) ) {
+
+        // material
+
+        //material.name = line.substring( 7 ).trim();
+
+      } else if ( /^mtllib /.test( line ) ) {
+
+        // mtl file
+
+      } else if ( /^s /.test( line ) ) {
+
+        // smooth shading
+
+      } else {
+
+        // console.log( "THREE.OBJLoader: Unhandled line " + line );
+
+      }
+
+    }
+
+    var children = object.children;
+
+    for ( var i = 0, l = children.length; i < l; i ++ ) {
+
+      var geometry = children[ i ].geometry;
+
+      //geometry.computeCentroids();
+      //geometry.computeFaceNormals();
+      //geometry.computeBoundingSphere();
+
+    }
+
+    //return object;
+
+  return ({vertices:geometry.vertices, faces:geometry.faces, colors:false});
+}
+
+
+function parse_stl_ascii (s)
+{
+  try
+  {
+    var stl_string=arrayBufferToString(s);
+
+    var vertices=[];
+    var faces=[];
+    var vert_hash = {};
+
+    stl_string = stl_string.replace(/\r/, "\n");
+    stl_string = stl_string.replace(/^solid[^\n]*/, "");
+    stl_string = stl_string.replace(/\n/g, " ");
+    stl_string = stl_string.replace(/facet normal /g,"");
+    stl_string = stl_string.replace(/outer loop/g,"");
+    stl_string = stl_string.replace(/vertex /g,"");
+    stl_string = stl_string.replace(/endloop/g,"");
+    stl_string = stl_string.replace(/endfacet/g,"");
+    stl_string = stl_string.replace(/endsolid[^\n]*/, "");
+    stl_string = stl_string.replace(/facet/g,"");
+    stl_string = stl_string.replace(/\s+/g, " ");
+    stl_string = stl_string.replace(/^\s+/, "");
+
+    var facet_count = 0;
+    var block_start = 0;
+    var vertex;
+    var vertexIndex;
+    var points = stl_string.split(" ");
+    var face_indices=[];
+    var len=points.length/12-1;
+
+    for (var i=0; i<len; i++)
+    {
+      face_indices = [];
+      for (var x=0; x<3; x++)
+      {
+        f1=parseFloat(points[block_start+x*3+3]);
+        f2=parseFloat(points[block_start+x*3+4]);
+        f3=parseFloat(points[block_start+x*3+5]);
+        vertexIndex = vert_hash[ [f1,f2,f3] ];
+        if (vertexIndex == null)
+        {
+          vertexIndex = vertices.length;
+          vertices.push(new THREE.Vector3(f1,f2,f3));
+          vert_hash[ [f1,f2,f3] ] = vertexIndex;
+        }
+
+        face_indices.push(vertexIndex);
+      }
+      faces.push(new THREE.Face3(face_indices[0],face_indices[1],face_indices[2]));
+
+      block_start = block_start + 12;
+    }
+
+    return ({vertices:vertices, faces:faces, colors:false});
+  }
+  catch(err)
+  {
+    return "Can't parse file";
+    //return "ERROR: "+err.message;
+  }
+
+}
+
+function parse_stl_bin(s)
+{
+  var vertices=[];
+  var faces=[];
+  var vert_hash = {};
+  var vertexIndex;
+  var f1,f2,f3;
+  var v1,v2,v3;
+
+  //see if this is colored STL
+  var cpos=arrayBufferToString(s.slice(0,80)).toLowerCase().indexOf("color");
+
+  var fdata = new DataView(s, 0);
+  var only_default_color=true;
+
+  if (cpos>-1)
+  {
+    //there is a color, get the default color
+    def_red_color=fdata.getUint8 (cpos+6,true);
+    def_green_color=fdata.getUint8 (cpos+7,true);
+    def_blue_color=fdata.getUint8 (cpos+8,true);
+  }
+
+
+  var pos=80;
+
+  try
+  {
+    var tcount=fdata.getUint32(pos,true);
+  }
+  catch(err)
+  {
+    return "Can't parse file";
+    //return "ERROR: "+err.message;
+  }
+
+  //check if we're binary or ascii - comparing the actual file size to the "what is written in the file" file size
+  var predictedSize = 80 /* header */ + 4 /* count */ + 50 * tcount;
+  if (!(s.byteLength == predictedSize)) return parse_stl_ascii(s);
+
+
+  try
+  {
+
+    pos+=4;
+    while (tcount--)
+    {
+      //f1=fdata.getFloat32(pos,true);f2=fdata.getFloat32(pos+4,true);f3=fdata.getFloat32(pos+8,true);
+      //n=new THREE.Vector3(f1,f2,f3);
+
+      pos+=12;
+
+      f1=fdata.getFloat32(pos,true);f2=fdata.getFloat32(pos+4,true);f3=fdata.getFloat32(pos+8,true);
+      vertexIndex = vert_hash[ [f1,f2,f3] ];
+      if (vertexIndex == null)
+      {
+      vertexIndex = vertices.length;
+      vertices.push(new THREE.Vector3(f1,f2,f3));
+      vert_hash[ [f1,f2,f3] ] = vertexIndex;
+      }
+      v1=vertexIndex;
+
+      pos+=12;
+
+      f1=fdata.getFloat32(pos,true);f2=fdata.getFloat32(pos+4,true);f3=fdata.getFloat32(pos+8,true);
+      vertexIndex = vert_hash[ [f1,f2,f3] ];
+      if (vertexIndex == null)
+      {
+      vertexIndex = vertices.length;
+      vertices.push(new THREE.Vector3(f1,f2,f3));
+      vert_hash[ [f1,f2,f3] ] = vertexIndex;
+      }
+      v2=vertexIndex;
+
+      pos+=12;
+
+      f1=fdata.getFloat32(pos,true);f2=fdata.getFloat32(pos+4,true);f3=fdata.getFloat32(pos+8,true);
+      vertexIndex = vert_hash[ [f1,f2,f3] ];
+      if (vertexIndex == null)
+      {
+      vertexIndex = vertices.length;
+      vertices.push(new THREE.Vector3(f1,f2,f3));
+      vert_hash[ [f1,f2,f3] ] = vertexIndex;
+      }
+      v3=vertexIndex;
+
+      if (cpos>-1)
+      {
+        pos+=12;
+
+        //get 2 bytes of color (if any)
+        face_color=fdata.getUint16(pos,true);
+
+        if ((face_color==32768)||(face_color==65535))
+        {
+          //default color
+          color_red=def_red_color;
+          color_green=def_green_color;
+          color_blue=def_blue_color;
+        }
+        else
+        {
+          only_default_color=false;
+          color_red=Math.ceil((face_color & 31)*8.2258);    //0000000000011111
+          color_green=Math.ceil(((face_color & 992)>>5)*8.2258);  //0000001111100000
+          color_blue=Math.ceil(((face_color & 31744)>>10)*8.2258);  //0111110000000000
+
+          //the rgb are saved in values from 0 to 31 ... for us, we want it to be 0 to 255 - hence the 8.2258)
+        }
+
+        faces.push(new THREE.Face3(v1,v2,v3,1,new THREE.Color("rgb("+color_red+","+color_green+","+color_blue+")")));
+
+        pos+=2;
+      }
+      else
+      {
+        //no color
+        faces.push(new THREE.Face3(v1,v2,v3));
+        pos+=14;
+      }
+    }
+
+    vert_hash=null;
+
+    return ({vertices:vertices, faces:faces, colors:((cpos>-1)&&(!only_default_color))});
+  }
+  catch(err)
+  {
+    return "Can't parse file";
+    //return "ERROR: "+err.message;
+  }
+}
+
+function parse_vf(s)
+{
+  var o=JSON.parse(s);
+
+  var vertices=[];
+  var faces=[];
+
+  try
+  {
+    var len=o.vertices.length;
+    for (i=0;i<len;i++)
+      vertices.push(new THREE.Vector3(o.vertices[i][0],o.vertices[i][1],o.vertices[i][2]));
+
+    var len=o.faces.length;
+    for (i=0;i<len;i++)
+      faces.push(new THREE.Face3(o.faces[i][0],o.faces[i][1],o.faces[i][2]));
+
+    return ({vertices:vertices, faces:faces, colors:false});
+  }
+  catch(err)
+  {
+    return "Can't parse file";
+    //return "ERROR: "+err.message;
+  }
+
+}
+
+function geo_to_vf(geo)
+{
+  var vertices=[];
+  var faces=[];
+
+  var len=geo.vertices.length;
+  for (i=0;i<len;i++)
+    vertices.push([geo.vertices[i].x,geo.vertices[i].y,geo.vertices[i].z]);
+
+  var len=geo.faces.length;
+  for (i=0;i<len;i++)
+    faces.push([geo.faces[i].a,geo.faces[i].b,geo.faces[i].c]);
+
+
+  return ({vertices:vertices, faces:faces, colors:false});
+}
+
+if (!ArrayBuffer.prototype.slice) {
+    //Returns a new ArrayBuffer whose contents are a copy of this ArrayBuffer's
+    //bytes from `begin`, inclusive, up to `end`, exclusive
+    ArrayBuffer.prototype.slice = function (begin, end) {
+        //If `begin` is unspecified, Chrome assumes 0, so we do the same
+        if (begin === void 0) {
+            begin = 0;
+        }
+
+        //If `end` is unspecified, the new ArrayBuffer contains all
+        //bytes from `begin` to the end of this ArrayBuffer.
+        if (end === void 0) {
+            end = this.byteLength;
+        }
+
+        //Chrome converts the values to integers via flooring
+        begin = Math.floor(begin);
+        end = Math.floor(end);
+
+        //If either `begin` or `end` is negative, it refers to an
+        //index from the end of the array, as opposed to from the beginning.
+        if (begin < 0) {
+            begin += this.byteLength;
+        }
+        if (end < 0) {
+            end += this.byteLength;
+        }
+
+        //The range specified by the `begin` and `end` values is clamped to the
+        //valid index range for the current array.
+        begin = Math.min(Math.max(0, begin), this.byteLength);
+        end = Math.min(Math.max(0, end), this.byteLength);
+
+        //If the computed length of the new ArrayBuffer would be negative, it
+        //is clamped to zero.
+        if (end - begin <= 0) {
+            return new ArrayBuffer(0);
+        }
+
+        var result = new ArrayBuffer(end - begin);
+        var resultBytes = new Uint8Array(result);
+        var sourceBytes = new Uint8Array(this, begin, end - begin);
+
+        resultBytes.set(sourceBytes);
+
+        return result;
+    };
+}
+function upload_file(f)
+{
+  if (waiting) return;
+
+  if (!supported_file_type(f.name))
+  {
+    alert('File type is not supported');
+    return false;
+  }
+
+
+  if (f.size>max_file_size)
+  {
+    alert('File is too big - maximum allowed size is 20mb');
+    return false;
+  }
+
+  read_file(f);
+}
+
+
+
+function read_file(f)
+{
+  waiting=true;
+
+  var pbar=$id('file_pbar');
+  var reader = new FileReader();
+
+  reader.onerror = function(e)
+  {
+    var error_str="";
+    switch(e.target.error.code)
+    {
+      case e.target.error.NOT_FOUND_ERR:
+        error_str="File not found";
+      break;
+
+      case e.target.error.NOT_READABLE_ERR:
+        error_str="Can't read file - too large?";
+      break;
+
+      case e.target.error.ABORT_ERR:
+        error_str="Read operation aborted";
+      break;
+
+      case e.target.error.SECURITY_ERR:
+        error_str="File is locked";
+      break;
+
+      case e.target.error.ENCODING_ERR:
+        error_str="File too large";
+
+      break;
+
+      default:
+        error_str="Error reading file";
+    }
+    alert(error_str);
+    switch_view('drag');
+    return after_error();
+  }
+
+  reader.onload = function(e)
+  {
+    switch_view('proc');
+    setTimeout(function(){after_file_load(f.name, e.target.result)}, 500);
+  };
+
+  reader.onprogress = function(e)
+  {
+    if (cancel_download)
+    {
+      reader.abort();
+      return after_error();
+    }
+    else
+      pbar.value=e.loaded / e.total*100;
+  };
+
+  pbar.value=0;
+
+  switch_view('pbar');
+
+  reader.readAsArrayBuffer(f);
+}
+
+function read_from_url(url)
+{
+  if (waiting) return;
+  waiting=true;
+
+  if (url.length<1)
+  {
+    //alert('Please enter a valid url');
+    return after_error();
+  }
+
+  if (url_is_local) return download_from_local(url, url, true);
+
+  var xhr = new XMLHttpRequest();
+
+  xhr.onreadystatechange =
+  function(e)
+  {
+    if (xhr.readyState == 4)
+    {
+      var pos;
+      var s=xhr.responseText.trim();
+      //console.log(s);
+      if (s.substr(0,2)=='OK')
+      {
+        pos=s.indexOf('~');
+        s=s.substr(pos+1);
+        pos=s.indexOf('~');
+        var temp_filesize=s.substr(0, pos);
+
+        s=s.substr(pos+1);
+        pos=s.indexOf('~');
+        var temp_orig_filename=s.substr(0, pos);
+
+        s=s.substr(pos+1);
+        var temp_filename=((s.length<1)?"unknown":s);
+
+        download_from_local(temp_filename, temp_orig_filename);
+      }
+      else
+      {
+        if (s.substr(0,2)=='E1')
+          alert('Invalid link');
+        else if (s.substr(0,2)=='E2')
+          alert('File is too big - maximum allowed size is 30mb');
+        else if (s.substr(0,2)=='E4')
+          alert('Unknown file type');
+        else
+          alert('Error reading from url');
+
+        return after_error();
+      }
+    }
+  }
+
+  xhr.open("POST", "/general/read_from_url.php", true);
+  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhr.send("url="+url);
+}
+
+
+function download_from_local(filename, orig_filename, is_local)
+{
+  is_local=is_local||false;
+
+  var pbar=$id('file_pbar');
+  var xhr = new XMLHttpRequest();
+
+  xhr.onprogress =
+  function(e)
+  {
+    if (cancel_download)
+    {
+      del_temp_file(filename);
+      xhr.abort();
+      return after_error();
+    }
+    else
+      if (pbar!=null) pbar.value=e.loaded / e.total*100;
+  }
+
+  xhr.onreadystatechange =
+  function(e)
+  {
+    if (!cancel_download)
+      if (xhr.readyState == 4)
+      {
+        del_temp_file(filename);
+        switch_view('proc');
+        setTimeout(function(){after_file_load(orig_filename, xhr.response)}, 500);
+      }
+  }
+
+  pbar.value=0;
+  switch_view('pbar');
+
+  xhr.open((is_local?"GET":"POST"), filename, true);
+  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhr.responseType = "arraybuffer";
+  xhr.send(null);
+}
+
+function del_temp_file(f)
+{
+  var xhr = new XMLHttpRequest();
+
+  xhr.open("POST", "/general/del_temp.php", true);
+  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhr.send("filename="+f);
+}
