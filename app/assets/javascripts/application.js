@@ -12,7 +12,6 @@
 //
 
 //= require full.js
-//= require stl_index.js
 //= require rails-ujs
 //= require turbolinks
 //= require_tree .
