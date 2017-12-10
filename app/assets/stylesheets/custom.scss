@@ -1,0 +1,143 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+/* mixins, variables, etc. */
+
+$gray-medium-light: #eaeaea;
+
+/* universal */
+
+body {
+  padding-top: 60px;
+}
+
+section {
+  overflow: auto;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.center {
+  text-align: center;
+  h1 {
+    margin-bottom: 10px;
+  }
+}
+
+/* typography */
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1;
+}
+
+h1 {
+  font-size: 3em;
+  letter-spacing: -2px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.2em;
+  letter-spacing: -1px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: normal;
+  color: $gray-light;
+}
+
+p {
+  font-size: 1.1em;
+  line-height: 1.7em;
+}
+
+
+/* header */
+
+#logo {
+  float: left;
+  margin-right: 10px;
+  font-size: 1.7em;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  padding-top: 9px;
+  font-weight: bold;
+  &:hover {
+    color: white;
+    text-decoration: none;
+  }
+}
+
+/* footer */
+
+footer {
+  margin-top: 45px;
+  padding-top: 5px;
+  border-top: 1px solid $gray-medium-light;
+  color: $gray-light;
+  a {
+    color: $gray;
+    &:hover {
+      color: $gray-darker;
+    }
+  }
+  small {
+    float: left;
+  }
+  ul {
+    float: right;
+    list-style: none;
+    li {
+      float: left;
+      margin-left: 15px;
+    }
+  }
+}
+
+
+/* stl options */
+
+.cinfo
+      {
+        width:250px;
+        background:#DDDDDD;
+        border: 1px solid;
+        border-radius: 25px;
+        padding:2px 10px 2px 10px;
+        margin-bottom:20px;
+      }
+
+      .cinfo table {width:100%;}
+      .cinfo tr {text-align:left;vertical-align:top;}
+
+      #statswrap
+      {
+        display:inline-block;
+        vertical-align:top;
+        -webkit-transition: width 1.5s;
+        transition: width 1.5s;
+        overflow:hidden;
+      }
+
+      .cbar
+      {
+        width:20px;
+        height:20px;
+        display:inline-block;
+        cursor:pointer;
+        border:2px solid transparent;
+      }
+
+      .cact {margin-bottom:5px;}
+      .cact span {border-bottom: 1px dotted #3434AB;color:#3434AB;cursor:pointer;}
+
+      .vslink
+      {
+        position:absolute;
+        bottom:0px;right:1px;
+        font:10px Arial;color:#555555;
+        text-decoration:none;
+      }
