@@ -1,0 +1,258 @@
+  <input type="file" style="position:absolute; top:-150px;" id="fileselect" onchange="prepare_upload_file();">
+
+  <header>
+    <h4>Welcome to the free online STL viewer!
+    <br>View 3D STL files directly in your browser - no software installation is required.
+    <br>We upload nothing to our server - everything is done client side.
+    </h4>
+  </header>
+    <div style="width:100%;text-align:center;margin-bottom:10px;">
+          <!-- a href="/embed/" class="stitle" style="text-decoration:none;">* New - embed Viewstl.com in your own website!</a -->
+          <!-- a href="https://wordpress.org/plugins/wp-viewstl/" class="stitle" target="_blank" style="text-decoration:none;">Check Viewstl's WordPress plugin by <b>falldeaf</b>!</a><br -->
+    </div>
+
+    <div id="pwait" style="background: rgba(0,0,0,0.5);position: fixed;top: 0;right: 0;bottom: 0;left: 0;display:none;z-index:99999999;text-align:center;">
+      <div id="wtext" style="position:relative;margin:250px auto 0 auto;width:500px;height:80px;padding-top:10px;background:#EEEEEE;font:20px Arial;color:#343434;z-index: 99999;pointer-events: auto;border-radius:25px;">
+        <span id="pwait_txt">
+          Preparing file for 3D Printing
+        </span>
+        <br>
+        <span style="text-decoration:underline;cursor:pointer;" onclick="cancel_3dp=true;" id="c3dp">
+          (cancel)
+        </span>
+        <br>
+          <progress id="pbar_3dp" value="0" max="1"></progress>
+      </div>
+    </div>
+
+
+    <div id="mainwrap" style="text-align:center;margin:0 auto;visibility:hidden;">
+      <div id="cjcwrap" style="position:relative;border:1px dashed #000000;background:#EEEEEE;display:inline-block;">
+        <div id="cjcdrag" style="position:absolute;height:100px;width:350px;text-align:center;">
+          <span id="titlet1" style="font:20px Arial;color:#343434;">
+            Drag & drop your STL file here
+          </span>
+          <br>
+          <span id="titlet2" style="font:14px Arial;color:#3434AB;cursor:pointer;" onclick="if (waiting) return false;$id('fileselect').click();">
+            or <u>browse your computer</u>
+          </span>
+        </div>
+
+        <div id="cjcpbar" style="display:none;position:absolute;height:50px;width:350px;text-align:center;">
+          <span id="pgt1" style="font:15px Arial;color:#343478;">
+            Reading file ...
+          </span>
+          <br>
+          <progress id="file_pbar"  value="0" max="1"></progress>
+          <br>
+          <span id="fcancel" style="text-decoration:underline;cursor:pointer;" onclick="cancel_download=true;">
+            (cancel)
+          </span>
+        </div>
+
+        <div id="cjcproc" style="display:none;position:absolute;height:50px;width:350px;text-align:center;">
+          <span id="prt1" style="font:15px Arial;color:#343478;">
+            Processing ...
+          </span>
+          <br>
+        </div>
+
+        <div id="cjc" onmousedown="$id('rrotate2').checked=true;controls.autoRotate=false;" style="display:none;position:absolute;left:0px;top:0px;margin:0 auto;text-align:center;">
+        </div>
+      </div>
+
+      <div id="statswrap" style="width:0px;height:0px;">
+        <div style="width:280px;overflow:hidden;">
+          <h1 id="ifilename" style="visibility:hidden;">_</h1>
+
+          <div class="cinfo">
+            <h2>Model info</h2>
+            <table>
+              <tr style="vertical-align:bottom;">
+                <th>Size (<select id="suview" onchange="set_view_units(this.value);"><option value="1">mm</option><option value="2">in</option></select>)</th>
+                <td id="isize" style="width:50%;"></td>
+              </tr>
+              <tr>
+                <th>Volume (<span id="vunits">mm</span><sup>3</sup>)</th>
+                <td id="ivol" style="text-align:left;"></td>
+              </tr>
+              <tr>
+                <th>File units</th>
+                <td>
+                  <input type="radio" id="rmm" onclick="set_file_units(1);" name="runits" value="0" checked>mm<br>
+                  <input type="radio" id="rin" onclick="set_file_units(2);" name="runits" value="1">in<br>
+                </td>
+              </tr>
+            </table>
+          </div>
+
+
+          <div class="cinfo">
+            <h2>Options</h2>
+            <table>
+              <tr>
+                <th>Display</th>
+                <td>
+                  <input type="radio" id="rshade1" onclick="set_shading(0);" name="rshade" value="0" checked>Flat Shading<br>
+                  <input type="radio" id="rshade2" onclick="set_shading(1);" name="rshade" value="1">Smooth Shading<br>
+                  <input type="radio" id="rshade3" onclick="set_shading(2);" name="rshade" value="2">Wireframe<br>
+                </td>
+              </tr>
+              <tr>
+                <th>Color</th>
+                <td id="cpal">
+                                  <div class="cbar" id="black_color" onclick="set_color(this,'#000000');" style="background:#000000;"></div>
+                  <div class="cbar" id="white_color" onclick="set_color(this,'#FFFFFF');" style="background:#FFFFFF;"></div>
+                  <div class="cbar" id="blue_color" onclick="set_color(this,'#0000FF');" style="background:#0000FF;"></div>
+                  <div class="cbar" id="green_color" onclick="set_color(this,'#00FF00');" style="background:#00FF00;"></div>
+                  <div class="cbar" id="red_color" onclick="set_color(this,'#FF0000');" style="background:#FF0000;"></div>
+                  <div class="cbar" id="yellow_color" onclick="set_color(this,'#FFFF00');" style="background:#FFFF00;"></div>
+                  <div class="cbar" id="gray_color" onclick="set_color(this,'#909090');" style="background:#909090;border:2px solid #012101;"></div>
+                  <div class="cbar" id="azure_color" onclick="set_color(this,'#00FFFF');" style="background:#00FFFF;"></div>
+                  <div class="cbar" id="pink_color" onclick="set_color(this,'#FF00FF');" style="background:#FF00FF;"></div>
+                  <div class="cbar" id="purple_color" onclick="set_color(this,'#703487');" style="background:#703487;"></div>
+                  <div class="cbar" id="darkblue_color" onclick="set_color(this,'#102075');" style="background:#102075;"></div>
+                  <div class="cbar" id="brown_color" onclick="set_color(this,'#654321');" style="background:#654321;"></div>
+
+                        </td>
+              </tr>
+
+              <tr>
+                <th>Orientation</th>
+                <td>
+                  <select id="sel_orientation" onchange="set_orientation(this.value);">
+                    <option value="front">Front</option>
+                    <option value="right">Right</option>
+                    <option value="top">Top</option>
+                    <option value="back">Back</option>
+                    <option value="left">Left</option>
+                    <option value="bottom">Bottom</option>
+                  </select>
+                </td>
+              </tr>
+
+              <tr>
+                <th>Edges</th>
+                <td>
+                  <input type="radio" id="redge1" onclick="set_edges(true);" name="redge" value="0">Yes<br>
+                  <input type="radio" id="redge2" onclick="set_edges(false);" name="redge" value="1" checked>No<br>
+                </td>
+              </tr>
+
+              <tr>
+                <th>Auto- rotation</th>
+                <td>
+                  <input type="radio" id="rrotate1" onclick="controls.autoRotate=true;" name="rrotate" value="0" checked>Yes<br>
+                  <input type="radio" id="rrotate2" onclick="controls.autoRotate=false;" name="rrotate" value="1">No<br>
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <div style="width:100%;text-align:center;cursor:pointer;text-decoration:underline;color:#000055;" onclick="reset();">View another STL</div>
+
+        </div>
+      </div>
+
+          <div style="width:100%;text-align:center;margin-top:20px;"><h5>Powered by <a href="http://www.threejs.org/" target="_blank">three.js</a></h5></div>
+          </div>
+
+<script>
+var scene = new THREE.Scene();
+      var is_webgl=webgl_Detector.webgl;
+      var renderer = is_webgl ? new THREE.WebGLRenderer({preserveDrawingBuffer:true, alpha:true}): new THREE.CanvasRenderer();
+      var mesh=null;
+      var ambientLight     = null;
+      var directionalLight = null;
+      var pointLight       = null;
+      var camera = new THREE.PerspectiveCamera(45, 1, 0.1, 10000);
+
+      do_resize();
+
+      renderer.setClearColor( bg_color, 1);
+      $id('cjc').appendChild(renderer.domElement);
+      camera.position.set(0,0,100);
+      scene.add(camera);
+
+      ambientLight = new THREE.AmbientLight(0x202020);
+      camera.add(ambientLight);
+
+      directionalLight = new THREE.DirectionalLight(0xffffff, 0.75);
+      directionalLight.position.x = 1;
+      directionalLight.position.y = 1;
+      directionalLight.position.z = 2;
+      directionalLight.position.normalize();
+      camera.add(directionalLight);
+
+      pointLight = new THREE.PointLight(0xffffff, 0.3);
+      pointLight.position.x = 0;
+      pointLight.position.y = -25;
+      pointLight.position.z = 10;
+      camera.add(pointLight);
+
+      function animate()
+      {
+          requestAnimationFrame(animate);
+        renderer.render(scene, camera);
+        controls.update();
+      }
+
+
+      var units_cookie=getCookie("units");
+      suview.value=units_cookie=="in"?2:1;
+      view_units=units_cookie=="in"?2:1;
+      $id("vunits").innerHTML=units_cookie=="in"?"in":"mm";
+
+
+      //this function is being called from outside (from embedded page)
+      function set_rotation(b)
+      {
+        controls.autoRotate=b;
+        animate();
+      }
+
+      //this function is being called from outside (from embedded page)
+      function set_clean_mode(b)
+      {
+        $id('titlet1').style.display=b?'none':'inline';
+        $id('titlet2').style.display=b?'none':'inline';
+        $id('pgt1').style.display=b?'none':'inline';
+        $id('file_pbar').style.display=b?'none':'inline';
+        $id('fcancel').style.display=b?'none':'inline';
+        $id('prt1').style.display=b?'none':'inline';
+      }
+
+      //this function is being called from outside (from embedded page)
+      function set_noborder(b)
+      {
+        $id('cjcwrap').style.border=(b?'none':'1px dashed #000000');
+      }
+
+      var controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+      if (is_webgl)
+        controls.autoRotate=true;
+      else
+      {
+         $id('rrotate2').checked=true;        controls.autoRotate=false;
+      }
+
+      animate();
+
+      window.onresize=
+      function()
+      {
+        do_resize();
+      }
+
+      $id('cjcwrap').addEventListener('dragover', handleDragOver, false);
+      $id('cjcwrap').addEventListener('drop', handleFileDrop, false);
+
+
+
+      if (need_browser)
+        alert('Your browser is too old and is not supported by this website. Please install a modern browser (Chrome is recommended).');
+
+
+      setTimeout(function(){$id('mainwrap').style.visibility='visible';}, 200);
+</script>
