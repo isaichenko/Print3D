@@ -542,17 +542,14 @@
 
   <input type="file" style="position:absolute; top:-150px;" id="fileselect" onchange="prepare_upload_file();">
 
-  <header>
-    <h4>Welcome to the free online STL viewer!
-    <br>View 3D STL files directly in your browser - no software installation is required.
-    <br>We upload nothing to our server - everything is done client side.
-    </h4>
-  </header>
-    <div style="width:100%;text-align:center;margin-bottom:10px;">
-          <!-- a href="/embed/" class="stitle" style="text-decoration:none;">* New - embed Viewstl.com in your own website!</a -->
-          <!-- a href="https://wordpress.org/plugins/wp-viewstl/" class="stitle" target="_blank" style="text-decoration:none;">Check Viewstl's WordPress plugin by <b>falldeaf</b>!</a><br -->
-    </div>
 
+    <h4 align="center">Здесь Вы можете проверить Вашу STL модель и узнать ее параметры!
+    <br>Посмотрите 3D STL файл прямо в Вашем браузере - не нужно устанавливать никакое програмное обеспечение.
+    <br>Мы ничего не загружаем на наш сервер - все происходит на стороне клиента.
+    </h4>
+
+
+  <!--
     <div id="pwait" style="background: rgba(0,0,0,0.5);position: fixed;top: 0;right: 0;bottom: 0;left: 0;display:none;z-index:99999999;text-align:center;">
       <div id="wtext" style="position:relative;margin:250px auto 0 auto;width:500px;height:80px;padding-top:10px;background:#EEEEEE;font:20px Arial;color:#343434;z-index: 99999;pointer-events: auto;border-radius:25px;">
         <span id="pwait_txt">
@@ -566,35 +563,36 @@
           <progress id="pbar_3dp" value="0" max="1"></progress>
       </div>
     </div>
+  -->
 
 
     <div id="mainwrap" style="text-align:center;margin:0 auto;visibility:hidden;">
       <div id="cjcwrap" style="position:relative;border:1px dashed #000000;background:#EEEEEE;display:inline-block;">
         <div id="cjcdrag" style="position:absolute;height:100px;width:350px;text-align:center;">
           <span id="titlet1" style="font:20px Arial;color:#343434;">
-            Drag & drop your STL file here
+            Перетащите Ваш STL файл сюда
           </span>
           <br>
           <span id="titlet2" style="font:14px Arial;color:#3434AB;cursor:pointer;" onclick="if (waiting) return false;$id('fileselect').click();">
-            or <u>browse your computer</u>
+            или <u>укажите файл на Вашем компьютере</u>
           </span>
         </div>
 
         <div id="cjcpbar" style="display:none;position:absolute;height:50px;width:350px;text-align:center;">
           <span id="pgt1" style="font:15px Arial;color:#343478;">
-            Reading file ...
+            Чтение файла ...
           </span>
           <br>
           <progress id="file_pbar"  value="0" max="1"></progress>
           <br>
           <span id="fcancel" style="text-decoration:underline;cursor:pointer;" onclick="cancel_download=true;">
-            (cancel)
+            (отмена)
           </span>
         </div>
 
         <div id="cjcproc" style="display:none;position:absolute;height:50px;width:350px;text-align:center;">
           <span id="prt1" style="font:15px Arial;color:#343478;">
-            Processing ...
+            Обрабатываю ...
           </span>
           <br>
         </div>
@@ -608,21 +606,21 @@
           <h1 id="ifilename" style="visibility:hidden;">_</h1>
 
           <div class="cinfo">
-            <h2>Model info</h2>
+            <h2>Информация о моделе</h2>
             <table>
               <tr style="vertical-align:bottom;">
-                <th>Size (<select id="suview" onchange="set_view_units(this.value);"><option value="1">mm</option><option value="2">in</option></select>)</th>
+                <th>Размеры (<select id="suview" onchange="set_view_units(this.value);"><option value="1">мм</option><option value="2">дюймы</option></select>)</th>
                 <td id="isize" style="width:50%;"></td>
               </tr>
               <tr>
-                <th>Volume (<span id="vunits">mm</span><sup>3</sup>)</th>
+                <th>Объем (<span id="vunits">мм</span><sup>3</sup>)</th>
                 <td id="ivol" style="text-align:left;"></td>
               </tr>
               <tr>
-                <th>File units</th>
+                <th>Единицы измерения</th>
                 <td>
-                  <input type="radio" id="rmm" onclick="set_file_units(1);" name="runits" value="0" checked>mm<br>
-                  <input type="radio" id="rin" onclick="set_file_units(2);" name="runits" value="1">in<br>
+                  <input type="radio" id="rmm" onclick="set_file_units(1);" name="runits" value="0" checked>мм<br>
+                  <input type="radio" id="rin" onclick="set_file_units(2);" name="runits" value="1">дюймы<br>
                 </td>
               </tr>
             </table>
@@ -630,7 +628,7 @@
 
 
           <div class="cinfo">
-            <h2>Options</h2>
+            <h2>Настройки</h2>
             <table>
               <tr>
                 <th>Display</th>
@@ -641,7 +639,7 @@
                 </td>
               </tr>
               <tr>
-                <th>Color</th>
+                <th>Цвет</th>
                 <td id="cpal">
                                   <div class="cbar" id="black_color" onclick="set_color(this,'#000000');" style="background:#000000;"></div>
                   <div class="cbar" id="white_color" onclick="set_color(this,'#FFFFFF');" style="background:#FFFFFF;"></div>
@@ -660,7 +658,7 @@
               </tr>
 
               <tr>
-                <th>Orientation</th>
+                <th>Ориентация</th>
                 <td>
                   <select id="sel_orientation" onchange="set_orientation(this.value);">
                     <option value="front">Front</option>
@@ -674,24 +672,24 @@
               </tr>
 
               <tr>
-                <th>Edges</th>
+                <th>Грани</th>
                 <td>
-                  <input type="radio" id="redge1" onclick="set_edges(true);" name="redge" value="0">Yes<br>
-                  <input type="radio" id="redge2" onclick="set_edges(false);" name="redge" value="1" checked>No<br>
+                  <input type="radio" id="redge1" onclick="set_edges(true);" name="redge" value="0">Да<br>
+                  <input type="radio" id="redge2" onclick="set_edges(false);" name="redge" value="1" checked>Нет<br>
                 </td>
               </tr>
 
               <tr>
-                <th>Auto- rotation</th>
+                <th>Авто ротация</th>
                 <td>
-                  <input type="radio" id="rrotate1" onclick="controls.autoRotate=true;" name="rrotate" value="0" checked>Yes<br>
-                  <input type="radio" id="rrotate2" onclick="controls.autoRotate=false;" name="rrotate" value="1">No<br>
+                  <input type="radio" id="rrotate1" onclick="controls.autoRotate=true;" name="rrotate" value="0" checked>Да<br>
+                  <input type="radio" id="rrotate2" onclick="controls.autoRotate=false;" name="rrotate" value="1">Нет<br>
                 </td>
               </tr>
             </table>
           </div>
 
-          <div style="width:100%;text-align:center;cursor:pointer;text-decoration:underline;color:#000055;" onclick="reset();">View another STL</div>
+          <div style="width:100%;text-align:center;cursor:pointer;text-decoration:underline;color:#000055;" onclick="reset();">Посмотреть другой STL файл</div>
 
         </div>
       </div>
