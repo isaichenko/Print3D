@@ -1,0 +1,20 @@
+<% provide(:title, "Home") %>
+<h1>3D Печать - технология будущего</h1>
+
+<%= link_to 'New article', new_article_path, class: "btn btn-primary" %>
+
+<table>
+  <tr>
+    <th>Название</th>
+    <th>Статья</th>
+    <th></th>
+  </tr>
+
+  <% @articles.each do |article| %>
+    <tr>
+      <td><h2><%= article.title %></h2></td>
+      <td><%= article.text %></td>
+      <td><%= link_to 'Показать', article_path(article), class: "btn btn-primary" %></td>
+    </tr>
+  <% end %>
+</table>
