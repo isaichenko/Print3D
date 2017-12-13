@@ -1,11 +1,22 @@
 <p>
-  <strong>Title:</strong>
+  <strong>Название:</strong>
   <%= @article.title %>
 </p>
 
 <p>
-  <strong>Text:</strong>
+  <strong>Содержание:</strong>
   <%= @article.text %>
 </p>
 
+<h2>Комментарии</h2>
+<%= render @article.comments %>
+
+<h2>Добавить комментарий:</h2>
+<%= render 'comments/form' %>
+
+<%= link_to 'Редактировать', edit_article_path, class: "btn btn-primary" %>
+<%= link_to 'Удалить', @article,
+              class: "btn btn-primary",
+              method: :delete,
+              data: { confirm: 'Вы уверены?' } %>
 <%= link_to 'Назад', articles_path, class: "btn btn-primary" %>
