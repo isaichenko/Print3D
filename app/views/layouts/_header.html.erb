@@ -1,13 +1,16 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
-    <%= link_to "3D печать", root_path, id: "logo" %>
+    <%= link_to "Фабрика Технологий", root_path, id: "logo" %>
       <nav>
         <ul class="nav navbar-nav navbar-right">
           <li><%= link_to "Home",   root_path %></li>
           <li><%= link_to "Ваша модель",   your_model_path %></li>
           <li><%= link_to "Контакты",  contact_path %></li>
           <% if logged_in? %>
+          <% if current_user.admin? %>
             <li><%= link_to "Users", users_path %></li>
+            <li><%= link_to "Новая статья", new_article_path %></li>
+          <% end %>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               Аккаунт <b class="caret"></b>

@@ -8,7 +8,7 @@ end
 
 gem 'rails',                   '~> 5.1.4'
 gem 'bcrypt',                  '3.1.11'
-gem 'will_paginate',           '3.1.6'
+gem 'will_paginate',           '~> 3.1.0'
 gem 'bootstrap-will_paginate', '1.0.0'
 gem 'bootstrap-sass'
 gem 'pg'

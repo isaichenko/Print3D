@@ -1,9 +1,10 @@
 class ArticlesController < ApplicationController
-
-  #http_basic_authenticate_with name: "dhh", password: "secret", except: [:index, :show]
-
+  before_action :logged_in_user,  only: [:new, :create, :edit, :update, :destroy]
+  before_action :admin_user,     only: [:new, :create, :edit, :update, :destroy]
+  
   def index
-    @articles = Article.order("created_at DESC")
+    @articles = Article.paginate(:page => params[:page], :per_page => 5)
+    #@articles = Article.order("created_at DESC")
   end
 
   def show
@@ -19,10 +20,9 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = Article.new(article_params)
-
+    @article = current_user.articles.build(article_params)
     if @article.save
-      flash[:notice] = "Статья успешно создана!"
+      flash[:success] = "Статья успешно создана!"
       redirect_to @article
     else
       flash[:alert] = "Ошибка! Статья не создана!"
@@ -50,7 +50,8 @@ class ArticlesController < ApplicationController
   end
 
   private
+
     def article_params
-      params.require(:article).permit(:title, :text)
+      params.require(:article).permit(:title, :content)
     end
 end

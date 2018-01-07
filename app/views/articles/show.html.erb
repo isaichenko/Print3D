@@ -1,22 +1,20 @@
 <div class="container">
-    <div class="col-sm-10 col-sm-offset-1 col-xs-12 blog-content">
-        <div class="col-xs-12">
-            <div class="text-center">
-                <h2><%= @article.title %></h2>
-            </div>
-            <div>
-                <%= raw(@article.text) %>
-            </div>
-        </div>
-        <h2>Комментарии</h2>
-        <%= render @article.comments %>
-            <h2>Добавить комментарий:</h2>
-            <%= render 'comments/form' %>
-                <%= link_to 'Редактировать', edit_article_path, class: "btn btn-primary" %>
-                    <%= link_to 'Удалить', @article,
-              class: "btn btn-primary",
-              method: :delete,
-              data: { confirm: 'Вы уверены?' } %>
-                        <%= link_to 'Назад', articles_path, class: "btn btn-primary" %>
+  <div class="col-sm-10 col-sm-offset-1 col-xs-12 blog-content">
+    <div class="col-xs-12">
+      <div class="text-center">
+        <h2><%= @article.title %></h2>
+      </div>
+      <div>
+        <%= raw(@article.content) %>
+      </div>
     </div>
+    <%= link_to 'Назад', articles_path, class: "btn btn-primary" %>
+    <% if logged_in? %>
+    <% if current_user.admin? %>
+      <%= link_to "Обновить", edit_article_path(@article), class: "btn btn-primary" %>
+      <%= link_to "Удалить", @article, class: "btn btn-primary", method: :delete,
+                                  data: { confirm: "Вы уверены?" } %>
+    <% end %>
+    <% end %>
+  </div>
 </div>

@@ -22,11 +22,11 @@
  
   <p>
     <%= form.label :Содержание %><br>
-    <%= form.cktext_area :text, rows: 10, :ckeditor => {:toolbar => 'full' } %>
+    <%= form.cktext_area :content, rows: 10, :ckeditor => {:toolbar => 'full' } %>
   </p>
  
   <p>
-    <%= form.submit "Сохранить", class: "btn btn-primary" %>
+    <%= form.submit "Сохранить статью", class: "btn btn-primary" %>
   </p>
  
 <% end %>
