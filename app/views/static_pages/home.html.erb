@@ -1,3 +1,15 @@
 <img id="drag1" src="/assets/img_logo.gif" draggable="true" ondragstart="drag(event)" width="100%">
-<h1>3D печать - технология будущего!</h1>
-<h1><%= link_to 'Статьи', controller: 'articles' %></h1>
+
+<h2 class="display-3">Фабрика Технологий! 3D печать</h2>
+<hr class="my-4">
+
+<div class="jumbotron">
+<h2><%= link_to 'Статьи', controller: 'articles' %></h2>
+</div>
+
+<h2><%= link_to 'Проверьте Вашу STL модель', your_model_path %></h2>
+<br>
+<div class="jumbotron">
+<h2><%= link_to 'Наши Контакты', contact_path %></h2>
+</div>
+<h2><%= link_to 'Немного больше информации о 3D печати на Wikipedia', about_path %></h2>

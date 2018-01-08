@@ -14,7 +14,7 @@
 // require_tree ./global
 //
 //= require jquery3
-//= require bootstrap
+// require bootstrap
 //= require bootstrap-sprockets
 // require popper
 //= require rails-ujs

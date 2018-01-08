@@ -11,7 +11,7 @@
     <%= link_to 'Назад', articles_path, class: "btn btn-primary" %>
     <% if logged_in? %>
     <% if current_user.admin? %>
-      <%= link_to "Обновить", edit_article_path(@article), class: "btn btn-primary" %>
+      <%= link_to "Редактировать", edit_article_path(@article), class: "btn btn-primary" %>
       <%= link_to "Удалить", @article, class: "btn btn-primary", method: :delete,
                                   data: { confirm: "Вы уверены?" } %>
     <% end %>

@@ -6,20 +6,22 @@
           <div class="text-center">
             <h2><%= article.title %></h2>
             <h6><%= article.created_at.strftime('%b %d, %Y') %></h6>
-          </div>
-                <!--
-                    <div>
-                        <%= raw(article.content).truncate(400) %>
+          
+                </div>
+                   <!--<div>
+                        <%= raw(article.content).truncate(600) %>
                     </div>
                 -->
           <div class="text-center">
             <%= link_to "Читать далее...", article_path(article), class: "btn btn-primary" %>
+          <!--  
           <% if logged_in? %>
           <% if current_user.admin? %>
             <%= link_to "Удалить", article, class: "btn btn-primary", method: :delete,
                                   data: { confirm: "Вы уверены?" } %>
                                   <% end %>
                                   <% end %>
+                                -->
           </div>
           <br>
         </div>

@@ -2,39 +2,38 @@
   <div class="container">
     <%= link_to "Фабрика Технологий", root_path, id: "logo" %>
     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
     </button>
       <nav>
         <div class="navbar-collapse collapse" id="menu">
-        <ul class="nav navbar-nav navbar-right">
-          <li><%= link_to "Home",   root_path %></li>
-          <li><%= link_to "Ваша модель",   your_model_path %></li>
-          <li><%= link_to "Контакты",  contact_path %></li>
-          <% if logged_in? %>
-          <% if current_user.admin? %>
-            <li><%= link_to "Users", users_path %></li>
-            <li><%= link_to "Новая статья", new_article_path %></li>
-          <% end %>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              Аккаунт <b class="caret"></b>
-              </a>
-              <ul class="dropdown-menu">
-                <li><%= link_to "Профиль", current_user %></li>
-                <li><%= link_to "Настройки", edit_user_path(current_user) %></li>
-                <li class="divider"></li>
-                <li>
-                  <%= link_to "Log out", logout_path, method: :delete %>
-                </li>
-              </ul>
-            </li>
-          <% else %>
-            <li><%= link_to "Log in", login_path %></li>
-          <% end %>
-        </ul>
-      </div>
+          <ul class="nav navbar-nav navbar-right">
+            <li><%= link_to "Главная",   root_path %></li>
+            <li><%= link_to 'Статьи', controller: 'articles' %></li>
+            <li><%= link_to "Ваша модель",   your_model_path %></li>
+            <li><%= link_to "Контакты",  contact_path %></li>
+            <% if logged_in? %>
+              <% if current_user.admin? %>
+                <li><%= link_to "Users", users_path %></li>
+                <li><%= link_to "Новая статья", new_article_path %></li>
+              <% end %>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                Аккаунт <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to "Профиль", current_user %></li>
+                  <li><%= link_to "Настройки", edit_user_path(current_user) %></li>
+                  <li class="divider"></li>
+                  <li><%= link_to "Log out", logout_path, method: :delete %></li>
+                </ul>
+              </li>
+              <% else %>
+                <li><%= link_to "Log in", login_path %></li>
+              <% end %>
+          </ul>
+        </div>
       </nav>
   </div>
 </header>
