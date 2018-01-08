@@ -1,7 +1,13 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
     <%= link_to "Фабрика Технологий", root_path, id: "logo" %>
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
       <nav>
+        <div class="navbar-collapse collapse" id="menu">
         <ul class="nav navbar-nav navbar-right">
           <li><%= link_to "Home",   root_path %></li>
           <li><%= link_to "Ваша модель",   your_model_path %></li>
@@ -28,6 +34,7 @@
             <li><%= link_to "Log in", login_path %></li>
           <% end %>
         </ul>
+      </div>
       </nav>
   </div>
 </header>

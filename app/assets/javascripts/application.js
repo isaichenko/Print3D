@@ -13,9 +13,10 @@
 // require rails-ujs  //require jquery_ujs
 // require_tree ./global
 //
-//= require jquery
-//= require rails-ujs
+//= require jquery3
 //= require bootstrap
-// require bootstrap-sprockets
+//= require bootstrap-sprockets
+// require popper
+//= require rails-ujs
 //= require turbolinks
 //= require ckeditor/init
