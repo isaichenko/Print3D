@@ -1,15 +1,80 @@
-<img id="drag1" src="/assets/img_logo.gif" draggable="true" ondragstart="drag(event)" width="100%">
-
-<h2 class="display-3">Фабрика Технологий! 3D печать</h2>
-<hr class="my-4">
-
-<div class="jumbotron">
-<h2><%= link_to 'Статьи', controller: 'articles' %></h2>
+<div class="logo-image">
+  <img id="drag1" src="/assets/img_logo.gif" draggable="true" ondragstart="drag(event)" width="100%">
+  <h1 class="logo-text">Фабрика Технологий:<br /><small class="logo-small">Мечты становятся реальностью</small></h1>
 </div>
 
-<h2><%= link_to 'Проверьте Вашу STL модель', your_model_path %></h2>
+
+<!--<h2 class="display-5">Вы можете заказать у нас Серийную 3D печать!</h2>-->
+<!--<hr class="my-4">-->
+
+<!--
+<div class="card border-dark mb-3" style="width: 24rem;">
+  <img class="card-img-top" src="/assets/your_model.png" width="100%" alt="Card image cap">
+  <div class="card-body" align="center">
+    <h2 class="card-title">Ваша Модель</h2>
+      <p class="card-text">У нас Вы можете проверить Вашу STL модель, оценить внешний вид и узнать объем, что напрямую влияет на конечную цену</p>
+      <%= link_to 'Проверьте Вашу STL модель', your_model_path, class: "btn btn-primary" %>
+  </div>
+</div>
 <br>
-<div class="jumbotron">
-<h2><%= link_to 'Наши Контакты', contact_path %></h2>
+-->
+<div class="jumbotron" color="#fff">
+  <div class="container">
+<div class="card-deck">
+  <div class="card bg-light mb-3">
+    <img class="card-img-top" src="/assets/your_model.jpg" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">Ваша Модель</h5>
+      <p class="card-text">У нас Вы можете проверить Вашу STL модель, оценить внешний вид и узнать объем, что напрямую влияет на конечную цену.</p>
+    </div>
+    <div class="card-footer" align="center">
+      <%= link_to 'Проверить', your_model_path, class: "btn btn-primary btn-block" %>
+    </div>
+  </div>
+  <div class="card bg-light mb-3">
+    <img class="card-img-top" src="/assets/articles.jpg" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">Статьи</h5>
+      <p class="card-text">Ознакомиться стематическими статьями на сайте можно перейдя по ссылке ниже.</p>
+    </div>
+    <div class="card-footer" align="center">
+      <%= link_to 'Подробнее', articles_path, class: "btn btn-primary btn-block" %>
+    </div>
+  </div>
+  <div class="card bg-light mb-3">
+    <img class="card-img-top" src="/assets/3d_printer_card.jpg" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">О 3D печати</h5>
+      <p class="card-text">Здесь Вы можете подробнее разобраться с технологией 3D печати.</p>
+    </div>
+    <div class="card-footer" align="center">
+      <%= link_to 'Подробнее', about_path, class: "btn btn-primary btn-block" %>
+    </div>
+  </div>
 </div>
-<h2><%= link_to 'Немного больше информации о 3D печати на Wikipedia', about_path %></h2>
+
+</div> <!-- Закрыли контейнер -->
+</div>
+<div class="home-image">
+  <img src="/assets/24x7.jpg" class="img-fluid">
+  <div class="home-text">
+  <h1>Мы производим серийную печать!<br /><small class="logo-small">Наши принтеры работают 24х7!</small></h1>
+   <h4>Автоматизированная система распределения печати<br> в сочетании с удаленным контролем.</h4>
+ </div>
+</div>
+
+<!-- Раздел контакты -->
+<div class="jumbotron" align="center">
+<p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    Позвоните нам!
+  </a>
+  <%= link_to 'Наши Контакты', contact_path, class: "btn btn-primary" %>
+</p>
+<div class="collapse" id="collapseExample">
+  <div class="card card-body">
+    <img src="/assets/kyivstar.png" width="150" align="right">
+    +38-096-417-86-78
+  </div>
+</div>
+</div>

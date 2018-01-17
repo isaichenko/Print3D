@@ -14,9 +14,9 @@
 // require_tree ./global
 //
 //= require jquery3
-// require bootstrap
-//= require bootstrap-sprockets
-// require popper
+//= require popper
+//= require bootstrap
+// require bootstrap-sprockets
 //= require rails-ujs
 //= require turbolinks
-//= require ckeditor/init
+// require ckeditor/init

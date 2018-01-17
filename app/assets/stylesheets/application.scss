@@ -1,18 +1,221 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *@import "bootstrap-sprockets";
- *= require_tree .
- *= require_self
- */
-
-@import "bootstrap-sprockets";
+// Custom bootstrap variables must be set or imported *before* bootstrap.
 @import "bootstrap";
+
+/* universal */
+.logo-image {
+  position :relative;
+  width :100%;
+}
+
+
+.logo-text {
+position :absolute;
+text-align: left;
+/*top: 0px;*/
+bottom: 30px;
+left: 30px;
+width: 100%;
+color: #fff;
+font-weight: bold;
+text-transform: uppercase;
+}
+
+.logo-small {
+  color: #fff;
+}
+
+.home-image {
+  position :relative;
+  width : 100%;
+}
+
+.jumbotron {
+  margin-bottom: 0px;
+}
+
+.home-text {
+position :absolute;
+text-align: right;
+/*top: 0px;*/
+bottom: 30px;
+right: 30px;
+width: 100%;
+color: #fff;
+font-weight: bold;
+text-transform: uppercase;
+}
+
+.logo-small {
+  color: #fff;
+}
+
+body {
+  padding-top: 30px;
+}
+
+
+
+/* stl options */
+
+.cinfo
+      {
+        width:250px;
+        background:#fff;
+        border: 1px solid;
+        padding:2px 10px 2px 10px;
+        margin-bottom:20px;
+      }
+
+      .cinfo table {width:100%;}
+      .cinfo tr {text-align:left;vertical-align:top;}
+
+      #statswrap
+      {
+        display:inline-block;
+        vertical-align:top;
+        -webkit-transition: width 1.5s;
+        transition: width 1.5s;
+        overflow:hidden;
+      }
+
+      .cbar
+      {
+        width:20px;
+        height:20px;
+        display:inline-block;
+        cursor:pointer;
+        border:2px solid transparent;
+      }
+
+      .cact {margin-bottom:5px;}
+      .cact span {border-bottom: 1px dotted #3434AB;color:#3434AB;cursor:pointer;}
+
+      .vslink
+      {
+        position:absolute;
+        bottom:0px;right:1px;
+        font:10px Arial;color:#555555;
+        text-decoration:none;
+      }
+
+/* footer */
+
+footer {
+  margin-top: 45px;
+  padding-top: 5px;
+  border-top: 1px solid $gray-300;
+  color: $gray-400;
+  a {
+    color: $gray-600;
+    &:hover {
+      color: $gray-800;
+    }
+  }
+  small {
+    float: left;
+  }
+  ul {
+    float: right;
+    list-style: none;
+    li {
+      float: left;
+      margin-left: 15px;
+    }
+  }
+}
+
+/* miscellaneous */
+
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 45px;
+}
+
+
+/* forms */
+
+input, textarea, select, .uneditable-input {
+  border: 1px solid #bbb;
+  width: 100%;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+}
+
+input {
+  height: auto !important;
+}
+
+#error_explanation {
+  color: red;
+  ul {
+    color: red;
+    margin: 0 0 30px 0;
+  }
+}
+
+.field_with_errors {
+  .form-control {
+    color: $danger;
+  }
+}
+
+.checkbox {
+  margin-top: -10px;
+  margin-bottom: 10px;
+  span {
+    margin-left: 20px;
+    font-weight: normal;
+  }
+}
+
+#session_remember_me {
+  width: auto;
+  margin-left: 0;
+}
+
+/* Users index */
+
+.users {
+  list-style: none;
+  margin: 0;
+  li {
+    overflow: auto;
+    padding: 10px 0;
+    border-bottom: 1px solid $gray-200;
+  }
+}
+
+/* articles */
+
+.articles {
+  list-style: none;
+  padding: 0;
+  li {
+    padding: 10px 0;
+    border-top: 1px solid #e8e8e8;
+  }
+  .user {
+    margin-top: 5em;
+    padding-top: 0;
+  }
+  .content {
+    display: block;
+    margin-left: 60px;
+    img {
+      display: block;
+      padding: 5px 0;
+    }
+  }
+  .timestamp {
+    color: $gray-400;
+    display: block;
+    margin-left: 60px;
+  }
+  .gravatar {
+    float: left;
+    margin-right: 10px;
+    margin-top: 5px;
+  }
+}
