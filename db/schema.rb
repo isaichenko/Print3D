@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180109005542) do
+ActiveRecord::Schema.define(version: 20180107133617) do
 
   create_table "articles", force: :cascade do |t|
     t.string "title"
@@ -22,19 +22,6 @@ ActiveRecord::Schema.define(version: 20180109005542) do
     t.index ["user_id"], name: "index_articles_on_user_id"
   end
 
-  create_table "ckeditor_assets", force: :cascade do |t|
-    t.string "data_file_name", null: false
-    t.string "data_content_type"
-    t.integer "data_file_size"
-    t.string "data_fingerprint"
-    t.string "type", limit: 30
-    t.integer "width"
-    t.integer "height"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["type"], name: "index_ckeditor_assets_on_type"
-  end
-
   create_table "comments", force: :cascade do |t|
     t.string "commenter"
     t.text "body"
@@ -42,12 +29,6 @@ ActiveRecord::Schema.define(version: 20180109005542) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["article_id"], name: "index_comments_on_article_id"
-  end
-
-  create_table "images", force: :cascade do |t|
-    t.string "file", limit: 256, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
