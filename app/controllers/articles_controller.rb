@@ -1,7 +1,7 @@
 class ArticlesController < ApplicationController
   before_action :logged_in_user,  only: [:new, :create, :edit, :update, :destroy]
   before_action :admin_user,     only: [:new, :create, :edit, :update, :destroy]
-  
+
   def index
     @articles = Article.paginate(:page => params[:page], :per_page => 5)
     #@articles = Article.order("created_at DESC")
@@ -25,7 +25,7 @@ class ArticlesController < ApplicationController
       flash[:success] = "Статья успешно создана!"
       redirect_to @article
     else
-      flash[:alert] = "Ошибка! Статья не создана!"
+      flash[:danger] = "Ошибка! Статья не создана!"
       render 'new'
     end
   end

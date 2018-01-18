@@ -1,5 +1,4 @@
 <% provide(:title, "Ваша STL Модель") %>
-<div class="jumbotron">
 <h1 align="center">Ваша STL модель!</h1>
 <script>
       var need_browser=false;
@@ -548,7 +547,7 @@
     <br>Посмотрите 3D STL файл прямо в Вашем браузере - не нужно устанавливать никакое програмное обеспечение.
     <br>Мы ничего не загружаем на наш сервер - все происходит на стороне клиента.
     </h4>
-  </div>
+
 
 
   <!--
@@ -611,7 +610,7 @@
             <h2>Информация о моделе</h2>
             <table>
               <tr style="vertical-align:bottom;">
-                <th>Размеры (<select id="suview" onchange="set_view_units(this.value);"><option value="1">мм</option><option value="2">дюймы</option></select>)</th>
+                <th>Размеры(<select id="suview" onchange="set_view_units(this.value);"><option value="1">мм</option><option value="2">дюймы</option></select>)</th>
                 <td id="isize" style="width:50%;"></td>
               </tr>
               <tr>
@@ -619,7 +618,7 @@
                 <td id="ivol" style="text-align:left;"></td>
               </tr>
               <tr>
-                <th>Единицы измерения</th>
+                <th>Измерение</th>
                 <td>
                   <input type="radio" id="rmm" onclick="set_file_units(1);" name="runits" value="0" checked>мм<br>
                   <input type="radio" id="rin" onclick="set_file_units(2);" name="runits" value="1">дюймы<br>
