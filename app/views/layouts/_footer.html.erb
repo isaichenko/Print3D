@@ -1,14 +1,37 @@
+<!--
 <footer class="footer">
-  <small>
+  <div class="bg-dark text-white"> 
+    <div class="row"> 
+    <div class="col-sm-6">
+    <h5 class="text-warning">О сайте factoryoftech.com</h5>
+    <p class="text-justify"><small>Мы любим 3D печать настолько что посвятили этому не один год. Наш первый 3D принтер был собран по запчастям винтик за винтиком своими силами. Какова была радость создать первую деталь, не создать а РАСПЕЧАТАТЬ! Этот процесс настолько вдохновил что было принято решение не останавливаться на достигнутом и создать систему, способную в автономном режиме распечатывать серийно любое количество экземпляров, при чем всем процессом можно управлять удаленно, наблюдать и контролировать. Мы надеемся наш сайт и наш сервис подарят Вам радость и наслаждение процессом. Добро пожаловать на factoryoftech.com</p>
+    <br>
     Фабрика Технологий - 3D печать Вашей мечты
-  </small>
-  <nav>
-    <ul>
-      <li><%= link_to "Главная",   root_path %></li>
-      <li><%= link_to 'Статьи', controller: 'articles' %></li>
-      <li><%= link_to "Ваша модель",   your_model_path %></li>
-      <li><%= link_to "Контакты",  contact_path %></li>
-      <li><%= link_to "About",   about_path %></li>
-    </ul>
-  </nav>
+    </small>
+    </div>
+    <div class="col-sm-1">
+          
+<ul class="nav flex-column">
+  <li class="nav-item">
+    <%= link_to "Главная",   root_path, class: "nav-link active" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Статьи', articles_path, class: "nav-link" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Ваша модель",   your_model_path, class: "nav-link" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Контакты",  contact_path, class: "nav-link" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "About",   about_path, class: "nav-link" %>
+  </li>
+</ul>
+
+
+  </div>
+</div>
+</div>
 </footer>
+-->
