@@ -1,37 +1,96 @@
-<!--
+
 <footer class="footer">
-  <div class="bg-dark text-white"> 
-    <div class="row"> 
-    <div class="col-sm-6">
+
+  <div class="jumbotron bg-dark text-white">
+    <div class="container">
+    <div class="row">
+    <div class="col-sm-7">
     <h5 class="text-warning">О сайте factoryoftech.com</h5>
-    <p class="text-justify"><small>Мы любим 3D печать настолько что посвятили этому не один год. Наш первый 3D принтер был собран по запчастям винтик за винтиком своими силами. Какова была радость создать первую деталь, не создать а РАСПЕЧАТАТЬ! Этот процесс настолько вдохновил что было принято решение не останавливаться на достигнутом и создать систему, способную в автономном режиме распечатывать серийно любое количество экземпляров, при чем всем процессом можно управлять удаленно, наблюдать и контролировать. Мы надеемся наш сайт и наш сервис подарят Вам радость и наслаждение процессом. Добро пожаловать на factoryoftech.com</p>
+    <p class="text-justify"><small line-height="20%">Мы любим 3D печать настолько что посвятили этому не один год. Наш первый 3D принтер был собран по запчастям винтик за винтиком своими силами. Какова была радость создать первую деталь, не создать а РАСПЕЧАТАТЬ! Этот процесс настолько вдохновил что было принято решение не останавливаться на достигнутом и создать систему, способную в автономном режиме распечатывать серийно любое количество экземпляров, при чем всем процессом можно управлять удаленно, наблюдать и контролировать. Мы надеемся наш сайт и наш сервис подарят Вам радость и наслаждение процессом. Добро пожаловать на factoryoftech.com
+    <br>
+    <span class="oi oi-phone">067</span>
     <br>
     Фабрика Технологий - 3D печать Вашей мечты
-    </small>
+    </small></p>
     </div>
-    <div class="col-sm-1">
-          
-<ul class="nav flex-column">
-  <li class="nav-item">
-    <%= link_to "Главная",   root_path, class: "nav-link active" %>
-  </li>
-  <li class="nav-item">
-    <%= link_to 'Статьи', articles_path, class: "nav-link" %>
-  </li>
-  <li class="nav-item">
-    <%= link_to "Ваша модель",   your_model_path, class: "nav-link" %>
-  </li>
-  <li class="nav-item">
-    <%= link_to "Контакты",  contact_path, class: "nav-link" %>
-  </li>
-  <li class="nav-item">
-    <%= link_to "About",   about_path, class: "nav-link" %>
-  </li>
-</ul>
+
+<div class="col-sm-2">
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <h5 class="text-warning">Ваш STL файл</h5>
+    </li>
+      <small>
+        <li class="nav-item nav-link">
+          <%= link_to 'Проверить', your_model_path, class: "btn btn-warning btn-block" %>
+        </li>
+        <li class="nav-item nav-link">
+          КС: +38-096-417-86-78
+        </li>
+        <li class="nav-item nav-link">
+          email: mail@factoryoftech.com
+        </li>
+      </small>
+  </ul>
+</div>
 
 
-  </div>
+
+
+
+<div class="col-sm-1">
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <h5 class="text-warning">Social</h5>
+    </li>
+      <small>
+        <li class="nav-item nav-link">
+          Facebook
+        </li>
+        <li class="nav-item nav-link">
+          Google+
+        </li>
+        <li class="nav-item nav-link">
+          Twitter
+        </li>
+        <li class="nav-item nav-link">
+          YouTube
+        </li>
+      </small>
+  </ul>
+</div>
+
+<div class="col-sm-2">
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <h5 class="text-warning">Меню</h5>
+    </li>
+      <small>
+        <li class="nav-item">
+          <%= link_to "Главная",   root_path, class: "nav-link active" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Статьи', articles_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Ваша модель",   your_model_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Контакты",  contact_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "About",   about_path, class: "nav-link" %>
+        </li>
+      </small>
+  </ul>
+</div>
+
+
+
+</div>
+<br><br>
+<small>
+  <div align="center">
+&copy; Фабрика технологий 2017</div></small>
 </div>
 </div>
 </footer>
--->

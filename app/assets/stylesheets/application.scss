@@ -1,5 +1,6 @@
 // Custom bootstrap variables must be set or imported *before* bootstrap.
 @import "bootstrap";
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300');
 
 /* universal */
 .logo-image {
@@ -101,21 +102,23 @@ body {
 /* footer */
 
 footer {
-font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  margin-top: 45px;
-  padding-top: 5px;
+  font-family: 'Open Sans', sans-serif;
+  margin-top: 0px;
+  padding-top: 0px;
   border-top: 1px solid $gray-300;
   color: $gray-100;
   a {
-    color: $gray-600;
+    color: #fff;
     &:hover {
       color: $yellow;
       text: underline;
     }
   }
   small {
-    float: left;
+    float: center;
   }
+
+
   ul {
     /*float: right;*/
     list-style: none;
@@ -124,6 +127,10 @@ font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
       margin-left: 15px;
     }*/
   }
+}
+
+.nav-link {
+  padding: 0.3rem 0rem;
 }
 
 /* miscellaneous */
