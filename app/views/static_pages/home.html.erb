@@ -66,22 +66,10 @@
 <!-- Раздел контакты -->
 <div class="jumbotron" align="center">
 <h1>Мы готовы к сотрудничеству!</h1>
-<p>
-  <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-    Позвоните нам!
-  </a>
-  <%= link_to 'Наши Контакты', contact_path, class: "btn btn-primary" %>
-</p>
-<div class="collapse" id="collapseExample">
-  <div class="card card-body">
-    <img src="/assets/kyivstar.png" width="150" align="right">
-    +38-096-417-86-78
-  </div>
-</div>
+<%= render 'layouts/contact' %>
 </div>
 
 <!-- Карусель с картинками -->
-
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -112,4 +100,3 @@
     <span class="sr-only">Next</span>
   </a>
 </div>
-
