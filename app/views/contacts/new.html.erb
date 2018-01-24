@@ -1,0 +1,41 @@
+<% provide(:title, "Новый Контакт") %>
+<div class="container">
+  <h1 align="center">Обратная связь</h1>
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+
+      <% if @contact.errors.any? %>
+      <div id="error_explanation">
+        <h5><%= pluralize(@contact.errors.count, "error") %> не позволяют отправить это сообщение:</h5>
+        <ul><% @contact.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+      <% end %>
+
+      <%= form_for @contact do |form| %>
+        <%= form.label :Имя %>
+        <%= form.text_field :name, class: 'form-control' %>
+
+        <%= form.label :email %>
+        <%= form.email_field :email, class: 'form-control' %>
+
+        <%= form.label :'Телефон' %>
+        <%= form.phone_field :phone, class: 'form-control' %>
+
+        <%= form.label :Сообщение %>
+        <%= form.text_area :message, rows: 7, class: 'form-control' %>
+
+        <%= form.label :Файл %>
+        <%= form.file_field :file, class: 'form-control', onchange: "validateFiles(file);",
+        data: { max_file_size: 5.megabytes } %>
+
+        <div align="center"><%= recaptcha_tags %></div>
+ 
+        <%= form.submit "Отправить сообщение", class: "btn btn-primary" %>
+ 
+      <% end %>
+    </div>
+  </div>
+</div>
