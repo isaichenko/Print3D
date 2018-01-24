@@ -6,7 +6,7 @@
 
       <% if @contact.errors.any? %>
       <div id="error_explanation">
-        <h5><%= pluralize(@contact.errors.count, "error") %> не позволяют отправить это сообщение:</h5>
+        <!--<h6><%= pluralize(@contact.errors.count, "error") %> не позволяют отправить это сообщение:</h6>-->
         <ul><% @contact.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
           <% end %>
@@ -25,11 +25,10 @@
         <%= form.phone_field :phone, class: 'form-control' %>
 
         <%= form.label :Сообщение %>
-        <%= form.text_area :message, rows: 7, class: 'form-control' %>
+        <%= form.text_area :message, rows: 5, class: 'form-control' %>
 
         <%= form.label :Файл %>
-        <%= form.file_field :file, class: 'form-control', onchange: "validateFiles(file);",
-        data: { max_file_size: 5.megabytes } %>
+        <%= form.file_field :file, class: 'form-control' %>
 
         <div align="center"><%= recaptcha_tags %></div>
  
