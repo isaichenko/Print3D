@@ -6,7 +6,7 @@ class ContactsController < ApplicationController
   def create
     @contact = Contact.new(contact_params)
     @contact.request = request
-    if verify_recaptcha(model: @contact) && @contact.deliver
+    if @contact.deliver
       flash.now[:success] = 'Спасибо за Ваше сообщение. Мы скоро с Вами свяжемся!'
     else
       flash.now[:danger] = 'Не удалось отправить сообщение.'
