@@ -1,8 +1,7 @@
 class Contact < MailForm::Base
   attribute :name,      :validate => true
   attribute :email,     :validate => /\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i
-  attribute :file,      :attachment => true
-  validates_format_of   :file, :with => /\A*\.(html|stl)\z/, :message => "прикол5"
+  attribute :file,      :validate => :file_size_type #:attachment => true,
   attribute :phone
 
   attribute :message
@@ -19,8 +18,13 @@ class Contact < MailForm::Base
   end
 
   private
-    def file_size_validation
+    def file_size_type
+      if file.present?
+      accept_ext = %w( .stl .png .jpg .jpeg )
       errors[:file] << "должен быть меньше чем 5Mb" if file.size > 10.megabytes
+      errors[:file] << "не поддерживается" unless accept_ext.include? File.extname(file.original_filename)
+    else
+      errors[:file] << 'Прикрепите Ваш файл'
     end
-
+    end
 end

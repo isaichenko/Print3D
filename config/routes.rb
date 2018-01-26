@@ -11,5 +11,6 @@ Rails.application.routes.draw do
   resources :users
   resources :articles
   resources "contacts", only: [:new, :create]
+  get    '/callback',   to: 'contacts#callback'
 
 end
