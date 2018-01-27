@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   delete '/logout',     to: 'sessions#destroy'
   resources :users
   resources :articles
-  resources "contacts", only: [:new, :create]
-  get    '/callback',   to: 'contacts#callback'
+  resources "file_sends", only: [:new, :create]
+  resources "call_backs",  only: [:new, :create]
 
 end

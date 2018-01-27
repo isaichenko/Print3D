@@ -1,0 +1,40 @@
+<% provide(:title, "Отправка файла") %>
+<div class="container">
+  <h1 align="center">Отправка файла</h1>
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+
+      <% if @filesend.errors.any? %>
+      <div id="error_explanation">
+        <!--<h6><%= pluralize(@filesend.errors.count, "error") %> не позволяют отправить это сообщение:</h6>-->
+        <ul><% @filesend.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+      <% end %>
+
+      <%= form_for @filesend do |form| %>
+        <%= form.label :Имя %>
+        <%= form.text_field :name, class: 'form-control' %>
+
+        <%= form.label :email %>
+        <%= form.email_field :email, class: 'form-control' %>
+
+        <%= form.label :'Телефон (не обязательно)' %>
+        <%= form.phone_field :phone, class: 'form-control' %>
+
+        <%= form.label :'Сообщение (не обязательно)' %>
+        <%= form.text_area :message, rows: 3, class: 'form-control' %>
+
+        <%= form.label :Файл %>
+        <%= form.file_field :file, class: 'form-control' %>
+
+        <%= recaptcha_tags %>
+
+        <%= form.submit "Отправить файл", class: "btn btn-primary" %>
+ 
+      <% end %>
+    </div>
+  </div>
+</div>
