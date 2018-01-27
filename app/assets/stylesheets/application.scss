@@ -37,10 +37,10 @@ text-transform: uppercase;
 
 .home-text {
 position :absolute;
-text-align: right;
+text-align: left;
 /*top: 0px;*/
-bottom: 30px;
-right: 30px;
+top: 20px;
+left: 10px;
 width: 100%;
 color: #fff;
 font-weight: bold;
