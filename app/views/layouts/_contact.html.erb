@@ -1,4 +1,5 @@
 <p>
+  <%= link_to 'Закажите звонок!', new_call_back_path, class: "btn btn-primary" %>
   <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
     Позвоните нам!
   </a>
@@ -6,8 +7,14 @@
 </p>
 <div class="collapse" id="collapseExample">
   <div class="card card-body">
-    <img src="/assets/kyivstar.png" width="150" align="right">
-    +38-098-008-55-38
-    +38-095-485-09-10
+    <ul class="list-group list-group-flush" align="left">
+  <li class="list-group-item"><img src="/assets/vodafone-logo.png" width="40px"> +38-095-485-09-10</li>
+  <li class="list-group-item"><img src="/assets/kyivstar-logo.png" width="40px"> +38-098-008-55-38</li>
+</ul>
   </div>
 </div>
+
+
+
+
+

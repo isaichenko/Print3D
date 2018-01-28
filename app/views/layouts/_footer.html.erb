@@ -1,20 +1,18 @@
 
-<footer class="footer">
+<footer class="footer" align="center">
 
   <div class="jumbotron bg-dark text-white">
     <div class="container">
     <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-7">
     <h5 class="text-warning">О сайте factoryoftech.com</h5>
-    <p class="text-justify"><small line-height="20%">Мы любим 3D печать настолько что посвятили этому не один год. Наш первый 3D принтер был собран по запчастям винтик за винтиком своими силами. Какова была радость создать первую деталь, не создать а РАСПЕЧАТАТЬ! Этот процесс настолько вдохновил что было принято решение не останавливаться на достигнутом и создать систему, способную в автономном режиме распечатывать серийно любое количество экземпляров, при чем всем процессом можно управлять удаленно, наблюдать и контролировать. Мы надеемся наш сайт и наш сервис подарят Вам радость и наслаждение процессом. Добро пожаловать на factoryoftech.com
-    <br>
-    <span class="oi oi-phone">067</span>
+    <p class="text-justify"><small>Мы любим 3D печать настолько что посвятили этому не один год. Наш первый 3D принтер был собран по запчастям винтик за винтиком своими силами. Какова была радость создать первую деталь, не создать а РАСПЕЧАТАТЬ! Этот процесс настолько вдохновил что было принято решение не останавливаться на достигнутом и создать систему, способную в автономном режиме распечатывать серийно любое количество экземпляров, при чем всем процессом можно управлять удаленно, наблюдать и контролировать. Мы надеемся наш сайт и наш сервис подарят Вам радость и наслаждение процессом. Добро пожаловать на factoryoftech.com
     <br>
     Фабрика Технологий - 3D печать Вашей мечты
     </small></p>
     </div>
 
-<div class="col-sm-3">
+<div class="col-sm-2">
   <ul class="nav flex-column">
     <li class="nav-item">
       <h5 class="text-warning">Ваш STL файл</h5>
@@ -23,19 +21,22 @@
         <li class="nav-item nav-link">
           <%= link_to 'Проверить', your_model_path, class: "btn btn-warning btn-block" %>
         </li>
+        
         <li class="nav-item nav-link">
-          КС: +38-096-417-86-78
+          <%= link_to 'Отправить', new_file_send_path, class: "btn btn-warning btn-block" %>
         </li>
         <li class="nav-item nav-link">
-          email: mail@factoryoftech.com
+          <img src="/assets/vodafone-logo.png" width="20px"> +38-095-485-09-10
+        </li>
+        <li class="nav-item nav-link">
+          <img src="/assets/kyivstar-logo.png" width="20px"> +38-098-008-55-38
+        </li>
+        <li class="nav-item nav-link">
+          mail@factoryoftech.com
         </li>
       </small>
   </ul>
 </div>
-
-
-
-
 
 <div class="col-sm-1">
   <ul class="nav flex-column">
@@ -44,16 +45,16 @@
     </li>
       <small>
         <li class="nav-item nav-link">
-          Facebook
+          <img src="/assets/facebook.png" width="40px">
         </li>
         <li class="nav-item nav-link">
-          Google+
+          <img src="/assets/google_plus.png" width="40px">
         </li>
         <li class="nav-item nav-link">
-          Twitter
+          <img src="/assets/twitter.png" width="40px">
         </li>
         <li class="nav-item nav-link">
-          YouTube
+          <img src="/assets/youtube.png" width="40px">
         </li>
       </small>
   </ul>
@@ -93,7 +94,7 @@
 <br><br>
 <small>
   <div align="center">
-&copy; Фабрика технологий 2017</div></small>
-</div>
+    &copy; Фабрика технологий 2017</div></small>
+  </div>
 </div>
 </footer>
