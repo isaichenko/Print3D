@@ -542,13 +542,18 @@
 
   <input type="file" style="position:absolute; top:-150px;" id="fileselect" onchange="prepare_upload_file();">
 
-
-    <h4 align="center">Здесь Вы можете проверить Вашу STL модель и узнать ее параметры!
-    <br>Посмотрите 3D STL файл прямо в Вашем браузере - не нужно устанавливать никакое програмное обеспечение.
-    <br>Мы ничего не загружаем на наш сервер - все происходит на стороне клиента.
-    </h4>
-
-
+<div class="container">
+    <h5 class="text-justify">Здесь Вы можете проверить Вашу STL модель и узнать ее параметры!
+    Посмотрите 3D STL файл прямо в Вашем браузере - не нужно устанавливать никакое програмное обеспечение.
+    Мы ничего не загружаем на наш сервер - все происходит на стороне клиента.</h5>
+    
+<p>Вы также можете отправить нам свой файл STL (или картинку для заказа разработки нашими специалистами) или же заказать обратный звонок.</p>
+<div align="center">
+<%= link_to 'Отправить файл', new_file_send_path, class: "btn btn-primary" %>
+<%= link_to 'Заказать звонок', new_call_back_path, class: "btn btn-primary" %>
+</div>
+<br>
+</div>
 
   <!--
     <div id="pwait" style="background: rgba(0,0,0,0.5);position: fixed;top: 0;right: 0;bottom: 0;left: 0;display:none;z-index:99999999;text-align:center;">

@@ -29,9 +29,12 @@
 
         <%= recaptcha_tags %>
         
-        <%= form.submit "Отправить сообщение", class: "btn btn-primary" %>
+        <%= form.submit "Заказать звонок", class: "btn btn-primary" %>
  
       <% end %>
+      <h4 align="center">Или отправьте нам свой файл</h4>
+      <%= link_to 'Отправить файл', new_file_send_path, class: "btn btn-success btn-block" %>
+      <br>
     </div>
   </div>
 </div>
