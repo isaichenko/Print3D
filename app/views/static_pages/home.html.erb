@@ -1,7 +1,8 @@
+<!-- Наши телефоны -->
 <div class="container" align="right">
   <div class="row">
     <div class="col-sm">
-    <h5>Наши телефоны:</h5>
+      <h5>Наши телефоны:</h5>
     </div>
     <div class="col-sm">
       <img src="/assets/vodafone-logo.png" width="30px"> 095-485-09-10
@@ -15,79 +16,91 @@
   </div>
 </div>
 
+<!-- Центральная гифка -->
 <div class="logo-image">
   <img src="/assets/img_logo.gif" draggable="true" ondragstart="drag(event)" width="100%">
   <h2 class="logo-text">Фабрика Технологий:<br /><small class="logo-small">Мечты становятся реальностью</small></h2>
 </div>
 
+<!-- Группа Card Услуги Статьи о 3D печати-->
 <div class="jumbotron">
   <div class="container">
-<div class="card-deck">
-  <div class="card bg-light mb-3">
-    <img class="card-img-top" src="/assets/your_model.jpg" alt="Card image cap">
-    <div class="card-body">
-      <h5 class="card-title">Ваша Модель</h5>
-      <p class="card-text">У нас Вы можете проверить Вашу STL модель, оценить внешний вид и узнать объем, что напрямую влияет на конечную цену.</p>
-    </div>
-    <div class="card-footer" align="center">
-      <%= link_to 'Проверить', your_model_path, class: "btn btn-primary btn-block" %>
-    </div>
-  </div>
-  <div class="card bg-light mb-3">
-    <img class="card-img-top" src="/assets/articles.jpg" alt="Card image cap">
-    <div class="card-body">
-      <h5 class="card-title">Статьи</h5>
-      <p class="card-text">Ознакомиться с тематическими статьями на сайте можно перейдя по ссылке ниже.</p>
-    </div>
-    <div class="card-footer" align="center">
-      <%= link_to 'Подробнее', articles_path, class: "btn btn-primary btn-block" %>
-    </div>
-  </div>
-  <div class="card bg-light mb-3">
-    <img class="card-img-top" src="/assets/3d_printer_card.jpg" alt="Card image cap">
-    <div class="card-body">
-      <h5 class="card-title">О 3D печати</h5>
-      <p class="card-text">Здесь Вы можете подробнее разобраться с технологией 3D печати.</p>
-    </div>
-    <div class="card-footer" align="center">
-      <%= link_to 'Подробнее', about_path, class: "btn btn-primary btn-block" %>
-    </div>
-  </div>
-</div>
-
-</div> <!-- Закрыли контейнер -->
-</div>
-
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item">
-      <img class="d-block w-100" src="/assets/24x7.jpg">
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Наши работы</h5>
-        <p>много интересного текста о работе</p>
+    <div class="card-deck">
+      <div class="card bg-light mb-3">
+        <img class="card-img-top" src="/assets/services.jpg" alt="Card image cap">
+        <div class="card-body">
+          <h4 class="card-title">Наши услуги</h4>
+          <p class="card-text">Мы с удовольствием поможем Вам в решении задач, связанных с 3D печатью, проектированием или доработкой деталей и узлов.</p>
+        </div>
+        <div class="card-footer" align="center">
+          <%= link_to 'Подробнее', services_path, class: "btn btn-primary btn-block" %>
+        </div>
+      </div>
+      <div class="card bg-light mb-3">
+        <img class="card-img-top" src="/assets/articles.jpg" alt="Card image cap">
+          <div class="card-body">
+            <h4 class="card-title">Статьи</h4>
+            <p class="card-text">Ознакомиться с тематическими статьями на сайте можно перейдя по ссылке ниже.</p>
+          </div>
+          <div class="card-footer" align="center">
+            <%= link_to 'Подробнее', articles_path, class: "btn btn-primary btn-block" %>
+          </div>
+      </div>
+      <div class="card bg-light mb-3">
+        <img class="card-img-top" src="/assets/3d_printer_card.jpg" alt="Card image cap">
+        <div class="card-body">
+          <h4 class="card-title">О 3D печати</h4>
+            <p class="card-text">Здесь Вы можете подробнее разобраться с технологией 3D печати.</p>
+        </div>
+        <div class="card-footer" align="center">
+          <%= link_to 'Подробнее', about_path, class: "btn btn-primary btn-block" %>
+        </div>
       </div>
     </div>
-  </div>
+  </div> 
 </div>
 
-
-<!--<div class="home-image">-->
-
+<!-- 24 x 7 -->
 <div>
   <div class="carousel-inner">
-  <img src="/assets/24x7.jpg" class="img-fluid">
-  <div class="carousel-caption d-none d-md-block">
-    <h1>Мы производим серийную печать!</h1>
-    <h1>Наши принтеры работают круглосуточно 24х7!</h1>
-    <h2>Автоматизированная система распределения печати в сочетании с удаленным контролем.</h2>
+    <img src="/assets/24x7.jpg" class="img-fluid">
+    <div class="carousel-caption d-none d-md-block">
+      <h1 align="top">Мы производим серийную печать!</h1>
+      <h2>Наши принтеры работают круглосуточно 24х7!</h2>
+      <h3>Автоматизированная система распределения печати в сочетании с удаленным контролем.</h3>
+    </div>
   </div>
 </div>
+
+<!-- Группа Card отправка и проверка файла-->
+<div class="jumbotron">
+  <div class="container">
+    <div class="card-deck">
+      <div class="card bg-light mb-3">
+        <img class="card-img-top" src="/assets/your_model.jpg" alt="Card image cap">
+        <div class="card-body">
+          <h3 class="card-title">Проверте свою модель</h3>
+          <p class="card-text">Есть файл 3D модели в формате STL? Проверте его и оценить внешний вид и объем детали (что напрямую влияет на конечную цену изготовления).</p>
+        </div>
+        <div class="card-footer" align="center">
+          <%= link_to 'Проверить', your_model_path, class: "btn btn-primary btn-block" %>
+        </div>
+      </div>
+      <div class="card bg-light mb-3">
+        <img class="card-img-top" src="/assets/file_send.jpg" alt="Card image cap">
+          <div class="card-body">
+            <h3 class="card-title">Отправьте нам свой файл</h3>
+            <p class="card-text">Вы можете отправить нам файл STL для точного просчета стоимости, укажите также Ваши контактные данные что бы мы могли с Вами связаться. Нет STL? Отправьте эскиз, мы поможем Вам изготовить нужную деталь.</p>
+          </div>
+          <div class="card-footer" align="center">
+            <%= link_to 'Отправить файл', new_file_send_path, class: "btn btn-primary btn-block" %>
+          </div>
+      </div>
+    </div>
+  </div> 
 </div>
 
 
-<div class="jumbotron" align="center">
-<h1>Мы производим серийную печать!</h1>
-</div>
 
 <!-- Карусель с картинками -->
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -95,7 +108,7 @@
     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
     <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
   </ol>
   <div class="carousel-inner">
     <div class="carousel-item active">
@@ -123,6 +136,6 @@
 
 <!-- Раздел контакты -->
 <div class="jumbotron" align="center">
-<h1>Мы готовы к сотрудничеству!</h1>
-<%= render 'layouts/contact' %>
+  <h1>Мы готовы к сотрудничеству!</h1>
+  <%= render 'layouts/contact' %>
 </div>
