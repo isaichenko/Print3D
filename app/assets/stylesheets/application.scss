@@ -4,20 +4,20 @@
 
 /* universal */
 .logo-image {
+  margin-top: 2px;
   position :relative;
   width :100%;
 }
 
 .logo-text {
-position :absolute;
-text-align: left;
-/*top: 0px;*/
-bottom: 10px;
-left: 20px;
-width: 100%;
-color: #fff;
-font-weight: bold;
-text-transform: uppercase;
+  position :absolute;
+  text-align: left;
+  bottom: 10px;
+  left: 20px;
+  width: 100%;
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 .logo-small {
@@ -31,18 +31,12 @@ text-transform: uppercase;
 
 .jumbotron {
   margin-bottom: 0px;
+  padding-top: 30px;
+  padding-bottom: 10px;
 }
 
-.home-text {
-position :absolute;
-text-align: left;
-/*top: 0px;*/
-top: 20px;
-left: 10px;
-width: 100%;
-color: #fff;
-font-weight: bold;
-text-transform: uppercase;
+.btn-primary {
+  margin-bottom: 2px;
 }
 
 .logo-small {
@@ -50,10 +44,8 @@ text-transform: uppercase;
 }
 
 body {
-  padding-top: 30px;
+  padding-top: 60px;
 }
-
-
 
 /* stl options */
 
@@ -117,14 +109,8 @@ footer {
     float: center;
   }
 
-
   ul {
-    /*float: right;*/
     list-style: none;
-    /*li {
-      float: left;
-      margin-left: 15px;
-    }*/
   }
 }
 
@@ -227,4 +213,3 @@ input {
     margin-top: 5px;
   }
 }
-
