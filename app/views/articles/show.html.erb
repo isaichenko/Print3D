@@ -1,20 +1,16 @@
-<div class="container">
-  <div class="col-sm-12 offset-sm-1 col-xs-12 blog-content">
-    <div class="col-xs-12">
-      <div class="text-center">
-        <h2><%= @article.title %></h2>
-      </div>
-      <div>
-        <%= raw(@article.content) %>
-      </div>
+<% provide(:title, @article.title) %>
+  <div class="container" align="center">
+    <h2><%= @article.title %></h2>
+    <img src="/assets/<%= @article.image_link %>" class="img-fluid" width="50%">
+    <div class="text-justify">
+      <%= @article.content %>
     </div>
-    <%= link_to 'Назад', articles_path, class: "btn btn-primary" %>
-    <% if logged_in? %>
-    <% if current_user.admin? %>
-      <%= link_to "Редактировать", edit_article_path(@article), class: "btn btn-primary" %>
-      <%= link_to "Удалить", @article, class: "btn btn-primary", method: :delete,
+      <%= link_to 'Назад', articles_path, class: "btn btn-primary" %>
+      <% if logged_in? %>
+        <% if current_user.admin? %>
+          <%= link_to "Редактировать", edit_article_path(@article), class: "btn btn-primary" %>
+          <%= link_to "Удалить", @article, class: "btn btn-primary", method: :delete,
                                   data: { confirm: "Вы уверены?" } %>
-    <% end %>
-    <% end %>
+        <% end %>
+      <% end %>
   </div>
-</div>

@@ -1,4 +1,3 @@
-<% provide(:title, "Новая Статья") %>
 <div class="container">
   <div class="row">
     <div class="col-md-6 offset-md-3">
@@ -12,12 +11,16 @@
       </div>
       <% end %>
       <%= form_for @article do |form| %>
-      <%= form.label :Название %>
-          <%= form.text_field :title, class: 'form-control' %>
-          <%= form.label :Содержание %>
-	        <%= form.text_area :content, rows: 7, class: 'form-control' %>
+        <%= form.label :Название %>
+        <%= form.text_field :title, class: 'form-control' %>
+
+        <%= form.label :Картинка %>
+        <%= form.text_field :image_link, class: 'form-control' %>
+
+        <%= form.label :Содержание %>
+	      <%= form.text_area :content, rows: 7, class: 'form-control' %>
  
-          <%= form.submit "Сохранить статью", class: "btn btn-primary" %>
+        <%= form.submit "Сохранить статью", class: "btn btn-primary" %>
  
       <% end %>
     </div>

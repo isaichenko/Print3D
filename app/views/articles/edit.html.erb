@@ -1,5 +1,6 @@
-<h1>Редактирование статьи</h1>
- 
- <%= render 'form' %>
- 
-<%= link_to 'Назад', articles_path, class: "btn btn-primary" %>
+<% provide(:title, "Редактирование статьи") %>
+  <h1 align="center">Редактирование статьи</h1>
+    <%= render 'form' %>
+  <div align="center">
+    <%= link_to 'Назад', articles_path, class: "btn btn-primary" %>
+  </div>
