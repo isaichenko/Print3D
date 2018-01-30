@@ -3,7 +3,7 @@
     <h2><%= @article.title %></h2>
     <img src="/assets/<%= @article.image_link %>" class="img-fluid" width="50%">
     <div class="text-justify">
-      <%= @article.content %>
+      <%= raw(@article.content) %>
     </div>
       <%= link_to 'Назад', articles_path, class: "btn btn-primary" %>
       <% if logged_in? %>
