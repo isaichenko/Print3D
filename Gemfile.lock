@@ -99,7 +99,7 @@ GEM
     concurrent-ruby (1.1.9)
     crass (1.0.6)
     erubi (1.10.0)
-    execjs (2.8.1)
+    execjs (2.7.0)
     ffi (1.15.5)
     figaro (1.2.0)
       thor (>= 0.14.0, < 2)
@@ -250,6 +250,7 @@ DEPENDENCIES
   capistrano3-puma
   capybara (~> 2.13)
   coffee-rails (~> 4.2)
+  execjs (= 2.7.0)
   figaro
   jbuilder (~> 2.5)
   jquery-rails

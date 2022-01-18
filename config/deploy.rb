@@ -10,6 +10,7 @@ set :application, "Print3d"
 set :environment, 'production'
 set :rails_env,   'production'
 set :deploy_to,   "/home/#{fetch(:user)}/apps/#{fetch(:application)}"
+set :rvm_custom_path, "/usr/share/rvm"
 set :pty,         false
 
 set :linked_files,
