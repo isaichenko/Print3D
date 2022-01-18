@@ -24,6 +24,8 @@
 
 config/database.yml
 config/secrets.yml
+config/database.production.yml
+config/secrets.production.yml
 .env
 
 # Ignore application configuration

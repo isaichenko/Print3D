@@ -13,7 +13,7 @@ gem 'bootstrap-will_paginate', '1.0.0'
 gem 'bootstrap',               '~> 4.0.0.beta3'
 gem 'sprockets-rails',         :require => 'sprockets/railtie'
 gem 'pg',                      '~> 0.11'
-gem 'puma',                    '~> 3.7'
+gem 'puma',                    '~> 4.0'
 gem 'sass-rails',              '~> 5.0'
 gem 'uglifier',                '>= 1.3.0'
 gem 'jquery-rails'
@@ -50,6 +50,19 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+
+  # Gem for deploy
+  gem 'capistrano', '~> 3.16',    require: false
+  gem 'capistrano-rvm',           require: false
+  gem 'capistrano-nginx',         require: false
+  gem 'capistrano3-puma',         require: false
+  gem 'capistrano-rails',         require: false
+  gem 'capistrano-rails-db',      require: false
+  gem 'capistrano-rails-console', require: false
+  gem 'capistrano-upload-config', require: false
+  gem 'sshkit-sudo',              require: false
+  # gem 'capistrano-figaro-yml'     require: false
+  # gem 'capistrano-sidekiq'        require: false # For gem sidekiq
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
