@@ -4,7 +4,7 @@
     <% @articles.each do |article| %>
       <h2><%= article.title %></h2>
       <h6><%= article.created_at.strftime('%b %d, %Y') %></h6>
-      <img src="/assets/<%= article.image_link %>" class="img-fluid" width="30%">
+      <%= image_tag article.image_link, class: "img-fluid", width: "30%" %>
       <br><br>
       <%= link_to "Читать далее...", article_path(article), class: "btn btn-primary" %>
       <br><br>

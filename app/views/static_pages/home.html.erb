@@ -6,10 +6,9 @@
     </div>
     <div class="col-sm">
       <%= image_tag 'vodafone-logo.png', width: '30px' %> 095-485-09-10
-      <!--<img src="/assets/vodafone-logo.png" width="30px"> 095-485-09-10-->
     </div>
     <div class="col-sm">
-      <img src="/assets/kyivstar-logo.png" width="30px"> 098-008-55-38
+      <%= image_tag 'kyivstar-logo.png', width: '30px' %> 098-008-55-38
     </div>
     <div class="col-sm">
       <%= link_to 'Закажите звонок!', new_call_back_path, class: "btn btn-primary" %>
@@ -19,7 +18,7 @@
 
 <!-- Центральная гифка -->
 <div class="logo-image">
-  <img src="/assets/img_logo.gif" draggable="true" ondragstart="drag(event)" width="100%">
+  <%= image_tag "img_logo.gif", draggable: "true", ondragstart: "drag(event)", width: "100%" %>
   <h2 class="logo-text">Фабрика Технологий:<br /><small class="logo-small">Мечты становятся реальностью</small></h2>
 </div>
 
@@ -28,7 +27,7 @@
   <div class="container">
     <div class="card-deck">
       <div class="card bg-light mb-3">
-        <img class="card-img-top" src="/assets/services.jpg" alt="Card image cap">
+        <%= image_tag "services.jpg", class: "card-img-top", alt: "Card image cap" %>
         <div class="card-body">
           <h4 class="card-title">Наши услуги</h4>
           <p class="card-text">Мы с удовольствием поможем Вам в решении задач, связанных с 3D печатью, проектированием или доработкой деталей и узлов.</p>
@@ -38,7 +37,7 @@
         </div>
       </div>
       <div class="card bg-light mb-3">
-        <img class="card-img-top" src="/assets/articles.jpg" alt="Card image cap">
+        <%= image_tag "articles.jpg", class: "card-img-top", alt: "Card image cap" %>
           <div class="card-body">
             <h4 class="card-title">Статьи</h4>
             <p class="card-text">Ознакомиться с тематическими статьями на сайте можно перейдя по ссылке ниже.</p>
@@ -48,7 +47,7 @@
           </div>
       </div>
       <div class="card bg-light mb-3">
-        <img class="card-img-top" src="/assets/3d_printer_card.jpg" alt="Card image cap">
+        <%= image_tag "3d_printer_card.jpg", class: "card-img-top", alt: "Card image cap" %>
         <div class="card-body">
           <h4 class="card-title">О 3D печати</h4>
             <p class="card-text">Здесь Вы можете подробнее разобраться с технологией 3D печати.</p>
@@ -64,7 +63,7 @@
 <!-- 24 x 7 -->
 <div>
   <div class="carousel-inner">
-    <img src="/assets/24x7.jpg" class="img-fluid">
+    <%= image_tag "24x7.jpg", class: "img-fluid" %>
     <div class="carousel-caption d-none d-md-block">
       <h1 align="top">Мы производим серийную печать!</h1>
       <h2>Наши принтеры работают круглосуточно 24х7!</h2>
@@ -78,7 +77,7 @@
   <div class="container">
     <div class="card-deck">
       <div class="card bg-light mb-3">
-        <img class="card-img-top" src="/assets/your_model.jpg" alt="Card image cap">
+        <%= image_tag "your_model.jpg", class: "card-img-top", alt: "Card image cap" %>
         <div class="card-body">
           <h3 class="card-title">Проверте свою модель</h3>
           <p class="card-text">Есть файл 3D модели в формате STL? Проверте его и оценить внешний вид и объем детали (что напрямую влияет на конечную цену изготовления).</p>
@@ -88,7 +87,7 @@
         </div>
       </div>
       <div class="card bg-light mb-3">
-        <img class="card-img-top" src="/assets/file_send.jpg" alt="Card image cap">
+        <%= image_tag "file_send.jpg", class: "card-img-top", alt: "Card image cap" %>
           <div class="card-body">
             <h3 class="card-title">Отправьте нам свой файл</h3>
             <p class="card-text">Вы можете отправить нам файл STL для точного просчета стоимости, укажите также Ваши контактные данные что бы мы могли с Вами связаться. Нет STL? Отправьте эскиз, мы поможем Вам изготовить нужную деталь.</p>
@@ -113,16 +112,16 @@
   </ol>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img class="d-block w-100" src="/assets/carousel1.jpg" alt="First slide">
+      <%= image_tag "carousel1.jpg", class: "d-block w-100", alt: "First slide" %>
     </div>
     <div class="carousel-item">
-      <img class="d-block w-100" src="/assets/carousel2.jpg" alt="Second slide">
+      <%= image_tag "carousel2.jpg", class: "d-block w-100", alt: "Second slide" %>
     </div>
     <div class="carousel-item">
-      <img class="d-block w-100" src="/assets/carousel3.jpg" alt="Third slide">
+      <%= image_tag "carousel3.jpg", class: "d-block w-100", alt: "Third slide" %>
     </div>
     <div class="carousel-item">
-      <img class="d-block w-100" src="/assets/carousel4.jpg" alt="Forth slide">
+      <%= image_tag "carousel4.jpg", class: "d-block w-100", alt: "Forth slide" %>
     </div>
   </div>
   <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">

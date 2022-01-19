@@ -1,7 +1,7 @@
 <% provide(:title, @article.title) %>
   <div class="container" align="center">
     <h2><%= @article.title %></h2>
-    <img src="/assets/<%= @article.image_link %>" class="img-fluid" width="50%">
+    <%= image_tag @article.image_link, class: "img-fluid", width: "50%" %>
     <div class="text-justify">
       <%= raw(@article.content) %>
     </div>
